@@ -37,7 +37,7 @@
     "src"
   ],
   "scripts": {
-    "build": "tsup && node scripts/fix-fonts-const.mjs",
+    "build": "tsup && node scripts/fix-fonts-const.mjs && node scripts/fix-tailwind-preset-dts.mjs",
     "dev": "tsup --watch"
   },
   "peerDependencies": {
