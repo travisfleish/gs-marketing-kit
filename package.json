@@ -1,0 +1,81 @@
+{
+  "name": "@genius-sports/gs-brand-kit",
+  "version": "0.1.0",
+  "description": "Genius Sports brand kit — design tokens, styles, and React components",
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.mjs",
+      "default": "./dist/index.mjs"
+    },
+    "./fonts": {
+      "types": "./dist/fonts.d.mts",
+      "import": "./dist/fonts.mjs",
+      "require": "./dist/fonts.mjs",
+      "default": "./dist/fonts.mjs"
+    },
+    "./tailwind-preset": {
+      "types": "./dist/tailwind-preset.d.mts",
+      "import": "./dist/tailwind-preset.mjs",
+      "require": "./dist/tailwind-preset.mjs",
+      "default": "./dist/tailwind-preset.mjs"
+    },
+    "./cms": {
+      "types": "./dist/cms.d.mts",
+      "import": "./dist/cms.mjs",
+      "require": "./dist/cms.mjs",
+      "default": "./dist/cms.mjs"
+    },
+    "./src/styles/globals.scss": "./src/styles/globals.scss"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "tsup && node scripts/fix-fonts-const.mjs",
+    "dev": "tsup --watch"
+  },
+  "peerDependencies": {
+    "@reach/rect": "^0.18.0",
+    "framer-motion": ">=11",
+    "next": ">=14",
+    "react": ">=18",
+    "react-dom": ">=18",
+    "tailwindcss": ">=3.4"
+  },
+  "devDependencies": {
+    "next": "^14.2.21",
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "framer-motion": "^11.2.13",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tailwindcss": "^4.2.2",
+    "tsup": "^8.0.0",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@rive-app/react-canvas": "^4.13.5",
+    "clsx": "^2.1.1",
+    "isomorphic-fetch": "^3.0.0",
+    "hamburger-react": "^2.5.1",
+    "he": "^1.2.0",
+    "lodash": "^4.17.23",
+    "next-seo": "^6.5.0",
+    "react-fast-marquee": "^1.6.5",
+    "react-hook-form": "^7.52.1",
+    "react-hotkeys-hook": "^4.5.0",
+    "react-paginate": "^8.2.0",
+    "react-select": "^5.10.2",
+    "react-share": "^5.1.0",
+    "react-use": "^17.5.1",
+    "swiper": "^12.1.2",
+    "swr": "^2.2.5"
+  }
+}

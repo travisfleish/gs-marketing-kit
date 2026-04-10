@@ -1,0 +1,407 @@
+$xxs: rem(400px);
+$xs: rem(480px);
+$sm: rem(640px);
+$md: rem(768px);
+$lg: rem(1024px);
+$xl: rem(1280px);
+$xxl: rem(1440px);
+$responsive_size_modifier: 0.825;
+$responsive_size_modifier_large: 0.5;
+
+html {
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	@apply font-heading;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	@apply font-heading;
+}
+
+h1,
+.text-h1 {
+	@include clamp("font-size", rem(72px * $responsive_size_modifier_large), rem(72px), $md, $lg);
+	@apply font-light leading-[1.08] tracking-[-0.03em];
+
+	&.is-large {
+		@include clamp("font-size", rem(74px * $responsive_size_modifier_large), rem(76px), $md, $lg);
+	}
+}
+
+h2,
+.text-h2 {
+	@include clamp("font-size", rem(62px * $responsive_size_modifier_large), rem(56px), $md, $lg);
+	@apply leading-[1.10] tracking-[-0.035em];
+	font-weight: 400;
+}
+
+h3,
+.text-h3 {
+	@include clamp("font-size", rem(58px * $responsive_size_modifier_large), rem(46px), $md, $lg);
+	@apply font-light leading-[1.10] tracking-[-0.02875em];
+}
+
+h4,
+.text-h4 {
+	@include clamp("font-size", rem(56px * $responsive_size_modifier_large), rem(40px), $md, $lg);
+	@apply font-light leading-[1.10] tracking-[-0.05em];
+
+	&.is-smaller-mob {
+		@include clamp("font-size", rem(50px * $responsive_size_modifier_large), rem(40px), $md, $lg);
+	}
+}
+
+h5,
+.text-h5 {
+	@include clamp("font-size", rem(48px * $responsive_size_modifier_large), rem(32px), $md, $lg);
+	@apply font-light leading-[1.10] tracking-[-0.035em];
+}
+
+h6,
+.text-h6 {
+	@include clamp("font-size", rem(42px * $responsive_size_modifier_large), rem(28px), $md, $lg);
+	@apply font-light leading-[1.40] tracking-[-0.035em];
+
+	&.is-report {
+		@include clamp("font-size", rem(28px * $responsive_size_modifier_large), rem(28px), $sm, $lg);
+	}
+}
+
+.text-h7 {
+	@include clamp("font-size", rem(34px * $responsive_size_modifier_large), rem(22px), $md, $lg);
+	@apply font-medium leading-[1.40] tracking-[-0.0275em];
+}
+
+.text-88 {
+	@include clamp("font-size", rem(120px * $responsive_size_modifier_large), rem(88px), $md, $lg);
+	@apply leading-[1.08] tracking-[0em];
+}
+
+.text-80 {
+	@include clamp("font-size", rem(80px * $responsive_size_modifier_large), rem(80px), $md, $lg);
+	@apply leading-[1.08] tracking-[-0.1em];
+}
+
+.text-72 {
+	@include clamp("font-size", rem(72px * $responsive_size_modifier_large), rem(72px), $md, $lg);
+	@apply leading-[1.2] tracking-[-0.03em];
+}
+
+.text-70 {
+	@include clamp("font-size", rem(70px * $responsive_size_modifier_large), rem(70px), $md, $lg);
+	@apply leading-[1.1] tracking-[-0.07em];
+
+	&.is-stat {
+		@include clamp("font-size", rem(118px * $responsive_size_modifier_large), rem(72px), $md, $lg);
+	}
+}
+
+.text-64 {
+	@include clamp("font-size", rem(64px * $responsive_size_modifier_large), rem(64px), $md, $lg);
+	@apply leading-[1.1] tracking-[-0.07em];
+
+	&.is-stat {
+		@include clamp("font-size", rem(128px * $responsive_size_modifier_large), rem(64px), $md, $lg);
+	}
+}
+
+.text-header-stat {
+	@include clamp("font-size", rem(68px * $responsive_size_modifier_large), rem(48px), $md, $lg);
+	@apply leading-[1.1];
+}
+
+.text-40 {
+	@include clamp("font-size", rem(62px * $responsive_size_modifier_large), rem(40px), $md, $lg);
+	@apply leading-[1.4] tracking-[-0.0375em];
+}
+
+.text-40-s {
+	@include clamp("font-size", rem(38px * $responsive_size_modifier_large), rem(40px), $md, $lg);
+	@apply leading-[1.4] tracking-[-0.0375em];
+}
+
+.text-36 {
+	@include clamp("font-size", rem(36px * $responsive_size_modifier_large), rem(36px), $md, $lg);
+	@apply leading-[1.1] tracking-[-0.045em];
+}
+
+.text-32 {
+	@include clamp("font-size", rem(32px * 0.7), rem(32px), $md, $lg);
+	@apply leading-[1.4] tracking-[-0.0375em];
+}
+
+.text-30 {
+	@include clamp("font-size", rem(30px * $responsive_size_modifier_large), rem(30px), $md, $lg);
+	@apply leading-[1.4] tracking-[-0.0375em];
+}
+
+.text-24 {
+	@include clamp("font-size", rem(32px * $responsive_size_modifier_large), rem(24px), $md, $lg);
+	@apply leading-[1.4] tracking-[-0.03em];
+
+	&.is-larger {
+		@include clamp("font-size", rem(42px * $responsive_size_modifier_large), rem(24px), $md, $lg);
+	}
+}
+
+.text-22 {
+	@include clamp("font-size", rem(32px * $responsive_size_modifier_large), rem(22px), $md, $lg);
+	@apply leading-[1.5] tracking-[-0.01375em];
+
+	&.is-heading {
+		@include clamp("font-size", rem(40px * $responsive_size_modifier_large), rem(22px), $md, $lg);
+	}
+}
+
+.text-20 {
+	@include clamp("font-size", rem(36px * $responsive_size_modifier_large), rem(20px), $md, $lg);
+	@apply leading-[1.45] tracking-[-0.0125em];
+
+	&.is-stat {
+		@include clamp("font-size", rem(28px * $responsive_size_modifier_large), rem(20px), $md, $lg);
+	}
+}
+
+.text-20--extra-clamp {
+	@include clamp("font-size", rem(20px * $responsive_size_modifier), rem(20px), $md, $lg);
+	@apply leading-[1.45] tracking-[-0.0125em];
+}
+
+.text-18 {
+	@include clamp("font-size", rem(32px * $responsive_size_modifier_large), rem(18px), $md, $lg);
+	@apply leading-[1.45] tracking-[-0.01125em];
+}
+
+.text-17 {
+	@include clamp("font-size", rem(17px), rem(17px), $md, $lg);
+	@apply leading-[1.2] tracking-[-0.010625em];
+}
+
+.text-16 {
+	@include clamp("font-size", rem(16px), rem(16px), $md, $lg);
+	@apply leading-[1.35] tracking-[-0.01em];
+}
+
+.text-16--clamp {
+	@include clamp("font-size", rem(16px * 0.9), rem(16px), $md, $lg);
+	@apply leading-[1.35] tracking-[-0.01em];
+}
+
+.text-15 {
+	@include clamp("font-size", rem(15px), rem(15px), $md, $lg);
+	@apply leading-[1.45] tracking-[-0.009375em];
+
+	&.is-smaller {
+		@include clamp("font-size", rem(13px), rem(15px), $md, $lg);
+	}
+}
+
+.text-15--clamp {
+	@include clamp("font-size", rem(15px * $responsive_size_modifier), rem(15px), $md, $lg);
+	@apply leading-[1.45] tracking-[-0.009375em];
+}
+
+.text-14 {
+	@include clamp("font-size", rem(14px), rem(14px), $md, $lg);
+	@apply leading-[1.3] tracking-[-0.009375em];
+}
+
+.text-12 {
+	@include clamp("font-size", rem(12px), rem(12px), $md, $lg);
+	@apply leading-[1.45] tracking-[-0.0075em];
+}
+
+.text-11 {
+	@include clamp("font-size", rem(11px), rem(11px), $md, $lg);
+	@apply leading-[1.45] tracking-[-0.0075em];
+}
+
+.text-9 {
+	@include clamp("font-size", rem(9px), rem(9px), $md, $lg);
+	@apply leading-[1.45] tracking-[-0.00625em];
+}
+
+.quote-lg {
+	@include clamp("font-size", rem(18px), rem(30px), $md, $lg);
+	@apply leading-[1.4] tracking-[-0.0075em];
+}
+
+.prose--post {
+	// img {
+	// 	@apply aspect-[16/9] rounded-lg object-cover object-top;
+	// }
+
+	ul,
+	ol {
+		list-style-type: none;
+		padding: 0;
+
+		li {
+			background-size: 1rem;
+			padding-left: 1.8em;
+			padding-top: 0;
+			margin: 0;
+			display: inline-block;
+			@apply font-body font-medium;
+			padding-inline-start: 2em !important;
+		}
+	}
+
+	&--li-purple {
+		li {
+			background: url("/ul-item-bullet-purple.svg") 0 8px / 1em 1em no-repeat;
+		}
+	}
+
+	&--li-orange {
+		li {
+			background: url("/ul-item-bullet-orange.svg") 0 8px / 1em 1em no-repeat;
+		}
+	}
+
+	// Prevent iframe overflow
+	iframe {
+		@apply w-full;
+	}
+}
+
+.single-customer-story__post-content {
+	img,
+	svg,
+	video,
+	canvas {
+		@apply mx-auto max-w-full sm:max-w-[50%];
+	}
+}
+
+.prose {
+	max-width: 100%;
+	color: inherit;
+
+	// Articles
+	@apply space-y-6 font-body;
+
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		@apply font-heading;
+	}
+
+	h4 {
+		@apply font-normal;
+	}
+
+	a {
+		text-decoration: underline;
+		@apply text-navy/80;
+	}
+
+	p {
+		@extend .text-18;
+		@apply font-normal;
+	}
+
+	strong {
+		@apply font-medium;
+	}
+
+	ul {
+		@apply mt-8 flex flex-col space-y-7 marker:text-navy;
+
+		li {
+			padding-inline-start: 0.6em;
+
+			&:first-child {
+				margin-bottom: 0;
+				margin-top: 0;
+			}
+		}
+	}
+
+	&.prose-lg {
+		p {
+			@extend .text-20;
+			@apply opacity-80;
+		}
+	}
+
+	&.prose-smaller {
+		p {
+			@extend .text-14;
+			margin-top: 0.7rem !important;
+			margin-bottom: 0.7rem !important;
+		}
+	}
+
+	&.prose-light {
+		ul {
+			li {
+				@apply font-normal;
+			}
+		}
+	}
+
+	&.greenhouse-prose {
+		strong {
+			@extend .text-h7;
+		}
+	}
+
+	// remove empty space on job pages
+	.content-intro {
+		display: none;
+	}
+}
+
+.br {
+	@screen md {
+		@apply block;
+	}
+
+	&--break-at-all {
+		@apply block;
+	}
+}
+
+// Dummy forms
+.dummy-form {
+	a {
+		@apply text-blue underline;
+	}
+}
+
+.text-stroke-stack {
+	@apply py-0 lg:py-0;
+
+	&__item {
+		&--stroke-brightGreen {
+			-webkit-text-stroke: 1px #e1ff67;
+		}
+		&--stroke-lightPurple {
+			-webkit-text-stroke: 1px #c2d1ff;
+		}
+		&--stroke-navy {
+			-webkit-text-stroke: 1px #0d1226;
+		}
+		&--stroke-white {
+			-webkit-text-stroke: 1px #ffffff;
+		}
+		&--stroke-lightBlue {
+			-webkit-text-stroke: 1px #95ecfd;
+		}
+	}
+}
+
+// sports masthead player
+.sports-player-stat {
+	@include clamp("font-size", rem(12px), rem(13.5px), $md, $lg);
+	@apply leading-[1.45] tracking-[-0.0075em];
+}

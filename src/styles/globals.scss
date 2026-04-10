@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "mixins";
+@import "fonts";
+@import "container";
+@import "typography";
+@import "misc";
+
+html {
+	scroll-behavior: smooth;
+}
