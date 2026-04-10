@@ -2,15 +2,19 @@
 import { useState } from "react";
 import { GlobalContext } from "@genius-sports/gs-brand-kit";
 
+type ShellContextState = {
+  history: unknown[];
+  options: unknown;
+};
+
 export default function Providers({
   children,
   options,
 }: {
   children: React.ReactNode;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  options: any;
+  options: unknown;
 }) {
-  const [context, setContext] = useState({ history: [], options });
+  const [context, setContext] = useState<ShellContextState>({ history: [], options });
 
   return (
     <GlobalContext.Provider value={[context, setContext]}>
