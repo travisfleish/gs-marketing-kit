@@ -1,6 +1,7 @@
 import React from "react";
 // elements
 import Link from "next/link";
+import cmsUrlToNextHref from "~/utils/cmsUrlToNextHref";
 import WpImage, { WpImageProps } from "~/components/elements/Wp";
 import { CircleArrow } from "~/components/elements/Icons";
 import trackEvent from "~/utils/trackEvent";
@@ -29,7 +30,7 @@ function FeaturedCustomer({ featuredCustomer, parentMenu }: FeaturedCustomerProp
 		<div className="ml-auto w-full space-y-4 lg:max-w-[29.5rem] lg:space-y-6">
 			{/* link card */}
 			<Link
-				href={featuredCustomer.permalink}
+				href={cmsUrlToNextHref(featuredCustomer.permalink)}
 				className="group relative flex overflow-hidden rounded-[0.375rem] bg-green p-4 lg:p-5"
 				onClick={() => {
 					trackEvent("menu_trackevent", {

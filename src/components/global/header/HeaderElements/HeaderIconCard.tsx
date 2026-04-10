@@ -1,6 +1,7 @@
 import React from "react";
 // elements
 import Link from "next/link";
+import cmsUrlToNextHref from "~/utils/cmsUrlToNextHref";
 import Icon from "~/components/elements/media/Icon";
 import { WpImageProps } from "~/components/elements/Wp";
 import { CircleArrow } from "~/components/elements/Icons";
@@ -28,7 +29,7 @@ interface HeaderIconCardProps {
 function HeaderIconCard({ item, gapLrg, parentMenu }: HeaderIconCardProps) {
 	return (
 		<Link
-			href={item?.link?.url || "#"}
+			href={cmsUrlToNextHref(item?.link?.url || "#")}
 			target={item?.link?.target}
 			className="group relative flex flex-col rounded-lg bg-lightGrey p-4 text-left transition-colors duration-200 hover:bg-lightGrey md:p-6 lg:col-span-7 lg:bg-white"
 			onClick={() => {

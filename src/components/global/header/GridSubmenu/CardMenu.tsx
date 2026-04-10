@@ -1,6 +1,7 @@
 import React from "react";
 // elements
 import Link from "next/link";
+import cmsUrlToNextHref from "~/utils/cmsUrlToNextHref";
 import { RightArrow, CircleArrow } from "~/components/elements/Icons";
 import trackEvent from "~/utils/trackEvent";
 import WpImage, { ImageProps } from "~/components/elements/Wp";
@@ -54,7 +55,7 @@ function CardMenu({ card, parentMenu }: CardMenuProps) {
 							card?.inner_menu?.map((item) => (
 								<Link
 									key={item?.link?.title}
-									href={item?.link?.url}
+									href={cmsUrlToNextHref(item?.link?.url)}
 									target={item?.link?.target}
 									className="group flex items-center space-x-2 rounded-md bg-white/5 p-4 py-[.94rem] backdrop-blur-lg"
 									onClick={() => {
@@ -77,7 +78,7 @@ function CardMenu({ card, parentMenu }: CardMenuProps) {
 					</menu>
 				)}
 				<Link
-					href={card?.card_link?.url}
+					href={cmsUrlToNextHref(card?.card_link?.url)}
 					target={card?.card_link?.target}
 					className="group absolute inset-0"
 					onClick={() => {

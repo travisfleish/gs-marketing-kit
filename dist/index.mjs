@@ -1006,12 +1006,35 @@ var init_trackEvent = __esm({
   }
 });
 
+// src/utils/cmsUrlToNextHref.ts
+function cmsUrlToNextHref(raw) {
+  if (raw == null) return "#";
+  if (raw === "" || raw === "#") return raw;
+  if (!raw.startsWith("http")) return raw;
+  try {
+    const u = new URL(raw);
+    if (LOCAL_HOSTNAMES.has(u.hostname)) {
+      const path = u.pathname + u.search + u.hash;
+      if (!path || path === "/") return "/";
+      return path.startsWith("/") ? path : `/${path}`;
+    }
+  } catch (e) {
+  }
+  return raw;
+}
+var LOCAL_HOSTNAMES;
+var init_cmsUrlToNextHref = __esm({
+  "src/utils/cmsUrlToNextHref.ts"() {
+    LOCAL_HOSTNAMES = /* @__PURE__ */ new Set(["localhost", "127.0.0.1", "[::1]"]);
+  }
+});
+
 // src/components/elements/links/Link.tsx
 import NextLink from "next/link";
 import { Fragment as Fragment2, jsx as jsx4, jsxs as jsxs4 } from "react/jsx-runtime";
 function Link(props) {
   const _a = props, { link, type, href, to, target, children, className } = _a, other = __objRest(_a, ["link", "type", "href", "to", "target", "children", "className"]);
-  const url = (link == null ? void 0 : link.url) || href || to || "#";
+  const url = cmsUrlToNextHref((link == null ? void 0 : link.url) || href || to || "#");
   let isExternal = false;
   let urlPath = url.trim().replace(/^[a-zA-Z]{3,5}:\/{2}[a-zA-Z0-9_.:-]+\//, "");
   if (urlPath.slice(0, 1) !== "/" && urlPath.slice(0, 1) !== "#") {
@@ -1066,6 +1089,7 @@ var init_Link = __esm({
     init_Button();
     init_TextLink();
     init_trackEvent();
+    init_cmsUrlToNextHref();
   }
 });
 
@@ -1774,7 +1798,7 @@ function HeaderIconCard({ item, gapLrg, parentMenu }) {
   return /* @__PURE__ */ jsxs14(
     Link4,
     {
-      href: ((_a = item == null ? void 0 : item.link) == null ? void 0 : _a.url) || "#",
+      href: cmsUrlToNextHref(((_a = item == null ? void 0 : item.link) == null ? void 0 : _a.url) || "#"),
       target: (_b = item == null ? void 0 : item.link) == null ? void 0 : _b.target,
       className: "group relative flex flex-col rounded-lg bg-lightGrey p-4 text-left transition-colors duration-200 hover:bg-lightGrey md:p-6 lg:col-span-7 lg:bg-white",
       onClick: () => {
@@ -1799,6 +1823,7 @@ function HeaderIconCard({ item, gapLrg, parentMenu }) {
 var HeaderIconCard_default;
 var init_HeaderIconCard = __esm({
   "src/components/global/header/HeaderElements/HeaderIconCard.tsx"() {
+    init_cmsUrlToNextHref();
     init_Icons();
     init_trackEvent();
     init_PillTag();
@@ -1816,7 +1841,7 @@ function FeaturedCustomer({ featuredCustomer, parentMenu }) {
     /* @__PURE__ */ jsxs15(
       Link5,
       {
-        href: featuredCustomer.permalink,
+        href: cmsUrlToNextHref(featuredCustomer.permalink),
         className: "group relative flex overflow-hidden rounded-[0.375rem] bg-green p-4 lg:p-5",
         onClick: () => {
           trackEvent_default("menu_trackevent", {
@@ -1889,6 +1914,7 @@ function FeaturedCustomer({ featuredCustomer, parentMenu }) {
 var FeaturedCustomer_default;
 var init_FeaturedCustomer = __esm({
   "src/components/global/header/TabSubmenu/FeaturedCustomer.tsx"() {
+    init_cmsUrlToNextHref();
     init_Wp();
     init_Icons();
     init_trackEvent();
@@ -1944,7 +1970,7 @@ function InnerColumnMenu({ heading_link, inner_menu, parentMenu, addNewTag, setS
     /* @__PURE__ */ jsxs17(
       Link6,
       {
-        href: (heading_link == null ? void 0 : heading_link.url) || "#",
+        href: cmsUrlToNextHref((heading_link == null ? void 0 : heading_link.url) || "#"),
         target: heading_link == null ? void 0 : heading_link.target,
         className: "group inline-flex items-end space-x-3",
         onClick: () => {
@@ -1966,7 +1992,7 @@ function InnerColumnMenu({ heading_link, inner_menu, parentMenu, addNewTag, setS
       return /* @__PURE__ */ jsx29("div", { children: /* @__PURE__ */ jsxs17(
         Link6,
         {
-          href: ((_b = item == null ? void 0 : item.link) == null ? void 0 : _b.url) || "#",
+          href: cmsUrlToNextHref(((_b = item == null ? void 0 : item.link) == null ? void 0 : _b.url) || "#"),
           target: (_c = item == null ? void 0 : item.link) == null ? void 0 : _c.target,
           className: "group flex items-center space-x-2",
           onClick: () => {
@@ -1991,6 +2017,7 @@ function InnerColumnMenu({ heading_link, inner_menu, parentMenu, addNewTag, setS
 var InnerColumnMenu_default;
 var init_InnerColumnMenu = __esm({
   "src/components/global/header/GridSubmenu/InnerColumnMenu.tsx"() {
+    init_cmsUrlToNextHref();
     init_Icons();
     init_trackEvent();
     init_PillTag();
@@ -2016,7 +2043,7 @@ function CardMenu({ card, parentMenu }) {
       return /* @__PURE__ */ jsxs18(
         Link7,
         {
-          href: (_b2 = item == null ? void 0 : item.link) == null ? void 0 : _b2.url,
+          href: cmsUrlToNextHref((_b2 = item == null ? void 0 : item.link) == null ? void 0 : _b2.url),
           target: (_c2 = item == null ? void 0 : item.link) == null ? void 0 : _c2.target,
           className: "group flex items-center space-x-2 rounded-md bg-white/5 p-4 py-[.94rem] backdrop-blur-lg",
           onClick: () => {
@@ -2044,7 +2071,7 @@ function CardMenu({ card, parentMenu }) {
     /* @__PURE__ */ jsxs18(
       Link7,
       {
-        href: (_e = card == null ? void 0 : card.card_link) == null ? void 0 : _e.url,
+        href: cmsUrlToNextHref((_e = card == null ? void 0 : card.card_link) == null ? void 0 : _e.url),
         target: (_f = card == null ? void 0 : card.card_link) == null ? void 0 : _f.target,
         className: "group absolute inset-0",
         onClick: () => {
@@ -2080,6 +2107,7 @@ function CardMenu({ card, parentMenu }) {
 var CardMenu_default;
 var init_CardMenu = __esm({
   "src/components/global/header/GridSubmenu/CardMenu.tsx"() {
+    init_cmsUrlToNextHref();
     init_Icons();
     init_trackEvent();
     init_Wp();
@@ -2152,7 +2180,7 @@ function HeaderCard({ card, parentMenu }) {
   return /* @__PURE__ */ jsxs20(
     Link8,
     {
-      href: ((_a = card == null ? void 0 : card.link) == null ? void 0 : _a.url) || "#",
+      href: cmsUrlToNextHref(((_a = card == null ? void 0 : card.link) == null ? void 0 : _a.url) || "#"),
       target: (_b = card == null ? void 0 : card.link) == null ? void 0 : _b.target,
       className: `group relative block h-full overflow-hidden rounded-lg p-6 transition-colors duration-300 ${cardBackground.join(" ")}`,
       onClick: () => {
@@ -2259,6 +2287,7 @@ function HeaderCard({ card, parentMenu }) {
 var HeaderCard_default;
 var init_HeaderCard = __esm({
   "src/components/global/header/CardSubmenu/HeaderCard.tsx"() {
+    init_cmsUrlToNextHref();
     init_Asset();
     init_Icons();
     init_trackEvent();
@@ -2313,7 +2342,7 @@ function FeaturedCard({ item, parentMenu }) {
   return /* @__PURE__ */ jsxs22(
     Link9,
     {
-      href: ((_a = item == null ? void 0 : item.link) == null ? void 0 : _a.url) || "#",
+      href: cmsUrlToNextHref(((_a = item == null ? void 0 : item.link) == null ? void 0 : _a.url) || "#"),
       target: (_b = item == null ? void 0 : item.link) == null ? void 0 : _b.target,
       className: "group flex flex-col overflow-hidden rounded-lg bg-brightGreen p-4 text-navy transition-colors duration-200 hover:bg-brightGreen hover:text-navy md:h-full md:grow md:bg-purple md:text-white",
       onMouseEnter: () => setCardHovered(true),
@@ -2355,6 +2384,7 @@ function FeaturedCard({ item, parentMenu }) {
 var FeaturedCard_default;
 var init_FeaturedCard = __esm({
   "src/components/global/header/LearnSubmenu/FeaturedCard.tsx"() {
+    init_cmsUrlToNextHref();
     init_Icon();
     init_Icons();
     init_trackEvent();
@@ -2382,7 +2412,7 @@ function FeaturedArticle({ item, parentMenu }) {
   return /* @__PURE__ */ jsxs23(
     Link10,
     {
-      href: item == null ? void 0 : item.permalink,
+      href: cmsUrlToNextHref(item == null ? void 0 : item.permalink),
       className: "group relative block rounded-lg bg-lightPurple p-3 pb-4 text-navy transition-colors duration-200 hover:bg-lightPurple md:flex md:items-center md:space-x-4 md:bg-[#F6F7F9] md:pb-3",
       onClick: () => {
         if (!parentMenu) return;
@@ -2412,6 +2442,7 @@ function FeaturedArticle({ item, parentMenu }) {
 var FeaturedArticle_default;
 var init_FeaturedArticle = __esm({
   "src/components/global/header/LearnSubmenu/FeaturedArticle.tsx"() {
+    init_cmsUrlToNextHref();
     init_Wp();
     init_Icons();
     init_trackEvent();
@@ -2578,11 +2609,12 @@ function MobileNavItem({ item, setShowMobileNav, selectedSubmenu, setSelectedSub
       ) })
     ] });
   }
-  return /* @__PURE__ */ jsx42(Link12, { href: (_c = item == null ? void 0 : item.menu_item) == null ? void 0 : _c.url, target: (_d = item == null ? void 0 : item.menu_item) == null ? void 0 : _d.target, onClick: handleClick, className: "flex items-center justify-between py-6 text-[20px]", children: /* @__PURE__ */ jsx42("span", { dangerouslySetInnerHTML: { __html: (_e = item == null ? void 0 : item.menu_item) == null ? void 0 : _e.title } }) });
+  return /* @__PURE__ */ jsx42(Link12, { href: cmsUrlToNextHref((_c = item == null ? void 0 : item.menu_item) == null ? void 0 : _c.url), target: (_d = item == null ? void 0 : item.menu_item) == null ? void 0 : _d.target, onClick: handleClick, className: "flex items-center justify-between py-6 text-[20px]", children: /* @__PURE__ */ jsx42("span", { dangerouslySetInnerHTML: { __html: (_e = item == null ? void 0 : item.menu_item) == null ? void 0 : _e.title } }) });
 }
 var MemoizedMobileNavItem;
 var init_MobileNav = __esm({
   "src/components/global/MobileNav.tsx"() {
+    init_cmsUrlToNextHref();
     init_Icons();
     init_MobileSubmenuHandler();
     init_HeaderButtons();
@@ -10812,6 +10844,7 @@ import clsx11 from "clsx";
 import { m as m6 } from "framer-motion";
 
 // src/components/global/header/HeaderElements/MenuItem.tsx
+init_cmsUrlToNextHref();
 import Link3 from "next/link";
 import { m as m5 } from "framer-motion";
 import clsx10 from "clsx";
@@ -10820,7 +10853,7 @@ function MenuItem({ openDesktopMenu, hoverMenuDesktop, item, int, selectedSubmen
   if (item.add_submenu) {
     return /* @__PURE__ */ jsx21("button", { type: "button", "aria-label": `Open ${item.menu_item.title} submenu`, onMouseEnter: () => openDesktopMenu(int), children: /* @__PURE__ */ jsx21(InnerItem, { item, int, selectedSubmenu, isScrolled }) });
   }
-  return /* @__PURE__ */ jsx21(Link3, { href: item.menu_item.url, target: item.menu_item.target, onMouseEnter: () => hoverMenuDesktop(int), children: /* @__PURE__ */ jsx21(InnerItem, { item, int, selectedSubmenu, isScrolled }) });
+  return /* @__PURE__ */ jsx21(Link3, { href: cmsUrlToNextHref(item.menu_item.url), target: item.menu_item.target, onMouseEnter: () => hoverMenuDesktop(int), children: /* @__PURE__ */ jsx21(InnerItem, { item, int, selectedSubmenu, isScrolled }) });
 }
 function InnerItem({ item, int, selectedSubmenu, isScrolled }) {
   return /* @__PURE__ */ jsxs13(

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 // elements
 import Link from "next/link";
+import cmsUrlToNextHref from "~/utils/cmsUrlToNextHref";
 import Asset, { AssetProps } from "~/components/elements/media/Asset";
 import { CircleArrow, GeniusFaviconIcon, StockArrow } from "~/components/elements/Icons";
 import trackEvent from "~/utils/trackEvent";
@@ -46,7 +47,7 @@ function HeaderCard({ card, parentMenu }: HeaderCardProps) {
 
 	return (
 		<Link
-			href={card?.link?.url || "#"}
+			href={cmsUrlToNextHref(card?.link?.url || "#")}
 			target={card?.link?.target}
 			className={`group relative block h-full overflow-hidden rounded-lg p-6 transition-colors duration-300 ${cardBackground.join(" ")}`}
 			onClick={() => {

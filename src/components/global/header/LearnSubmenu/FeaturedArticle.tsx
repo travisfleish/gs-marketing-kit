@@ -1,6 +1,7 @@
 import React from "react";
 // elements
 import Link from "next/link";
+import cmsUrlToNextHref from "~/utils/cmsUrlToNextHref";
 import WpImage, { WpImageProps } from "~/components/elements/Wp";
 import { CircleArrow } from "~/components/elements/Icons";
 import trackEvent from "~/utils/trackEvent";
@@ -27,7 +28,7 @@ interface FeaturedArticleProps {
 function FeaturedArticle({ item, parentMenu }: FeaturedArticleProps) {
 	return (
 		<Link
-			href={item?.permalink}
+			href={cmsUrlToNextHref(item?.permalink)}
 			className="group relative block rounded-lg bg-lightPurple p-3 pb-4 text-navy transition-colors duration-200 hover:bg-lightPurple md:flex md:items-center md:space-x-4 md:bg-[#F6F7F9] md:pb-3"
 			onClick={() => {
 				if (!parentMenu) return;

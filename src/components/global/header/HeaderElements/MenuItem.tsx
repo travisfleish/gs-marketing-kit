@@ -3,6 +3,7 @@ import React from "react";
 import Link from "next/link";
 import { m } from "framer-motion";
 import clsx from "clsx";
+import cmsUrlToNextHref from "~/utils/cmsUrlToNextHref";
 
 interface MenuItemProps {
 	openDesktopMenu;
@@ -30,7 +31,7 @@ function MenuItem({ openDesktopMenu, hoverMenuDesktop, item, int, selectedSubmen
 		);
 	}
 	return (
-		<Link href={item.menu_item.url} target={item.menu_item.target} onMouseEnter={() => hoverMenuDesktop(int)}>
+		<Link href={cmsUrlToNextHref(item.menu_item.url)} target={item.menu_item.target} onMouseEnter={() => hoverMenuDesktop(int)}>
 			<InnerItem item={item} int={int} selectedSubmenu={selectedSubmenu} isScrolled={isScrolled} />
 		</Link>
 	);

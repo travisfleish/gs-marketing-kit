@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 // elements
 import Link from "next/link";
+import cmsUrlToNextHref from "~/utils/cmsUrlToNextHref";
 import Icon from "~/components/elements/media/Icon";
 import { CircleArrow } from "~/components/elements/Icons";
 import { WpImageProps } from "~/components/elements/Wp";
@@ -39,7 +40,7 @@ function FeaturedCard({ item, parentMenu }: FeaturedCardProps) {
 	const [cardHovered, setCardHovered] = useState(false);
 	return (
 		<Link
-			href={item?.link?.url || "#"}
+			href={cmsUrlToNextHref(item?.link?.url || "#")}
 			target={item?.link?.target}
 			className="group flex flex-col overflow-hidden rounded-lg bg-brightGreen p-4 text-navy transition-colors duration-200 hover:bg-brightGreen hover:text-navy md:h-full md:grow md:bg-purple md:text-white"
 			onMouseEnter={() => setCardHovered(true)}

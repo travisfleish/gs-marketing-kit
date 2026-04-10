@@ -5,6 +5,7 @@ import NextLink from "next/link";
 import Button from "~/components/elements/buttons/Button";
 import TextLink from "~/components/elements/buttons/TextLink";
 import { trackLinkClick } from "~/utils/trackEvent";
+import cmsUrlToNextHref from "~/utils/cmsUrlToNextHref";
 
 export type LinkProps = {
 	link?: WpLinkType & {
@@ -24,8 +25,8 @@ export type LinkProps = {
 
 export function Link(props: LinkProps) {
 	const { link, type, href, to, target, children, className, ...other } = props;
-	// get url from either href prop or link.url
-	const url = link?.url || href || to || "#";
+	// get url from either href prop or link.url (strip localhost origin from CMS so in-app routing works)
+	const url = cmsUrlToNextHref(link?.url || href || to || "#");
 
 	let isExternal = false;
 	let urlPath = url.trim().replace(/^[a-zA-Z]{3,5}:\/{2}[a-zA-Z0-9_.:-]+\//, "");

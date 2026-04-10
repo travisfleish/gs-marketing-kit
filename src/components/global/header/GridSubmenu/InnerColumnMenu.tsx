@@ -1,6 +1,7 @@
 import React from "react";
 // elements
 import Link from "next/link";
+import cmsUrlToNextHref from "~/utils/cmsUrlToNextHref";
 import { CircleArrow, RightArrow } from "~/components/elements/Icons";
 import trackEvent from "~/utils/trackEvent";
 import PillTag from "~/components/elements/PillTag";
@@ -29,7 +30,7 @@ function InnerColumnMenu({ heading_link, inner_menu, parentMenu, addNewTag, setS
 		<menu>
 			{/* header */}
 			<Link
-				href={heading_link?.url || "#"}
+				href={cmsUrlToNextHref(heading_link?.url || "#")}
 				target={heading_link?.target}
 				className="group inline-flex items-end space-x-3"
 				onClick={() => {
@@ -58,7 +59,7 @@ function InnerColumnMenu({ heading_link, inner_menu, parentMenu, addNewTag, setS
 					inner_menu?.map((item) => (
 						<div key={item?.link?.title}>
 							<Link
-								href={item?.link?.url || "#"}
+								href={cmsUrlToNextHref(item?.link?.url || "#")}
 								target={item?.link?.target}
 								className="group flex items-center space-x-2"
 								onClick={() => {

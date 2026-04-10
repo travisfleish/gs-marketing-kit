@@ -1,6 +1,7 @@
 import React, { memo, useEffect } from "react";
 // elements
 import Link from "next/link";
+import cmsUrlToNextHref from "~/utils/cmsUrlToNextHref";
 import { m, LazyMotion, domAnimation, AnimatePresence } from "framer-motion";
 import clsx from "clsx";
 import { MobileChevron } from "../elements/Icons";
@@ -125,7 +126,7 @@ function MobileNavItem({ item, setShowMobileNav, selectedSubmenu, setSelectedSub
 	}
 	// else return link
 	return (
-		<Link href={item?.menu_item?.url} target={item?.menu_item?.target} onClick={handleClick} className="flex items-center justify-between py-6 text-[20px]">
+		<Link href={cmsUrlToNextHref(item?.menu_item?.url)} target={item?.menu_item?.target} onClick={handleClick} className="flex items-center justify-between py-6 text-[20px]">
 			<span dangerouslySetInnerHTML={{ __html: item?.menu_item?.title }} />
 		</Link>
 	);
