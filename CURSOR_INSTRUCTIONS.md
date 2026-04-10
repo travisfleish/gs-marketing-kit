@@ -10,7 +10,7 @@ cd your-app-name
 
 ## Step 2 — Install dependencies
 ```bash
-npm install @genius-sports/gs-brand-kit --legacy-peer-deps
+npm install github:travisfleish/gs-marketing-kit --legacy-peer-deps
 npm install framer-motion --legacy-peer-deps
 npm install sass --legacy-peer-deps
 ```
