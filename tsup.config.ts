@@ -1,18 +1,11 @@
-import { defineConfig } from "tsup";
+import { defineConfig, type Options } from "tsup";
 import { resolve } from "path";
 
-export default defineConfig({
-  entry: {
-    index: "src/index.ts",
-    fonts: "src/fonts.ts",
-    "tailwind-preset": "src/tailwind-preset.ts",
-    cms: "src/utils/cms.ts",
-  },
+const shared: Options = {
   format: ["esm"],
   dts: true,
   splitting: false,
   bundle: true,
-  clean: true,
   esbuildOptions(options) {
     options.alias = {
       "~": resolve(__dirname, "src"),
@@ -31,4 +24,24 @@ export default defineConfig({
     "sass",
   ],
   injectStyle: false,
-});
+};
+
+export default defineConfig([
+  {
+    ...shared,
+    entry: { index: "src/index.ts" },
+    clean: true,
+    banner: {
+      js: '"use client";',
+    },
+  },
+  {
+    ...shared,
+    entry: {
+      fonts: "src/fonts.ts",
+      "tailwind-preset": "src/tailwind-preset.ts",
+      cms: "src/utils/cms.ts",
+    },
+    clean: false,
+  },
+]);

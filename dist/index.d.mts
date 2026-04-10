@@ -1,8 +1,6 @@
 import * as react_jsx_runtime from 'react/jsx-runtime';
 import * as React$1 from 'react';
-import React__default from 'react';
-import { L as LinkProps, W as WpImageProps, a as WpOptionsFooter } from './Link-mWKhQbm-.mjs';
-export { A as AssetProps, I as ImageProps, b as Link, c as LinkTypeRenderer } from './Link-mWKhQbm-.mjs';
+import React__default, { HTMLProps } from 'react';
 
 type ButtonProps = {
     link?: {
@@ -22,6 +20,114 @@ type ButtonProps = {
     onMouseLeave?: () => void;
 };
 declare function Button({ link, button, size, className, children, onClick, onMouseEnter, onMouseLeave, ...other }: ButtonProps): react_jsx_runtime.JSX.Element;
+
+interface ImageProps {
+    url: string;
+    alt?: string;
+    title?: string;
+    width?: number;
+    height?: number;
+}
+interface WpImageProps extends HTMLProps<HTMLImageElement> {
+    image: ImageProps;
+    fill?: boolean;
+    priority?: boolean;
+    setParentLoadingComplete?: (loadingComplete: boolean) => void;
+    onLoad?: () => void;
+}
+
+interface AssetProps {
+    type?: string;
+    image: ImageProps;
+    animation: {
+        animation: {
+            url: string;
+        };
+        aspect_ratio?: string;
+    };
+    ratio: string;
+    priority: boolean;
+    isHovered?: boolean;
+    video?: {
+        file?: {
+            url: string;
+        };
+        show_controls?: boolean;
+        poster?: {
+            url?: string;
+        };
+    };
+    fill?: boolean;
+    className?: string;
+}
+
+type WpLinkType = {
+	title?: string;
+	url?: string;
+	target?: string;
+};
+
+interface FooterCol {
+	heading: string;
+	links: {
+		link: WpLinkType;
+	}[];
+}
+
+interface SocialLink {
+	image: ImageProps;
+	link: WpLinkType;
+}
+
+interface FooterCTA {
+	heading: string;
+	background_color_transition: string;
+	link: WpLinkType;
+	text: string;
+}
+
+interface FooterFeaturedLink {
+	text: string;
+	image: ImageProps;
+	link: WpLinkType;
+}
+
+interface WpOptionsFooter {
+	columns: FooterCol[];
+	social: {
+		links: SocialLink[];
+	};
+	global_cta: {
+		footer_cta: FooterCTA;
+	};
+	global_featured_links: {
+		footer_featured_links: FooterFeaturedLink[];
+	};
+	terms: {
+		content: string;
+		links: {
+			link: WpLinkType;
+		}[];
+	};
+}
+
+type LinkProps = {
+    link?: WpLinkType & {
+        title?: string;
+        url?: string;
+        target?: string;
+        link?: WpLinkType;
+    };
+    type?: string;
+    href?: string;
+    to?: string;
+    target?: string;
+    children?: React__default.ReactNode;
+    className?: string;
+    onClick?: (event: React__default.MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => void;
+};
+declare function Link(props: LinkProps): react_jsx_runtime.JSX.Element;
+declare function LinkTypeRenderer(props: any): react_jsx_runtime.JSX.Element;
 
 type LinkGroupProps = {
     links: LinkProps[];
@@ -263,4 +369,4 @@ type ScreenName = keyof typeof screens;
 
 declare const GlobalContext: React$1.Context<any[]>;
 
-export { Button, CTASpring, ChevronDown, CircleArrow, CloseIcon, type ColorName, ComponentRenderer, ContactItemHighlightedLowerSpring, ContactItemHighlightedLowerSpringHover, ContactItemHighlightedUpperSpring, ContactItemHighlightedUpperSpringHover, ContactItemLowerSpring, ContactItemUpperSpring, ContactSalesFormLines, ContactTopRightArrowCircle, FacebookLogo, FeaturedLinkTopRightArrowCircle, Footer, FooterCTABottomLines, FooterCTATopLines, FooterFeaturedLinksArrow, GeniusFaviconIcon, GlobalContext, Header, HeaderLogoBottom, HeaderLogoTop, type IconProps, InputCloseIcon, LeadersGridPlusCircle, type LinkGroupProps, LinkProps, LinkedinLogo, MARKETING_SITE_ORIGIN, MinusCircle, MobileChevron, NavLeftIcon, PlayArrow, PlusCircle, Providers, RightArrow, RightArrowCircle, type ScreenName, SearchIcon, SiteShell, SliderCircleArrow, StockArrow, TestimonialSliderArrow, type TextCardProps, TopRightArrowCircle, UlItemBulletOrange, WpImageProps, Xlogo, YoutubeLogo, colors, fontFamily, resolveMarketingNavUrl, rewriteHeaderNavToMarketingSite, screens, spacing };
+export { type AssetProps, Button, CTASpring, ChevronDown, CircleArrow, CloseIcon, type ColorName, ComponentRenderer, ContactItemHighlightedLowerSpring, ContactItemHighlightedLowerSpringHover, ContactItemHighlightedUpperSpring, ContactItemHighlightedUpperSpringHover, ContactItemLowerSpring, ContactItemUpperSpring, ContactSalesFormLines, ContactTopRightArrowCircle, FacebookLogo, FeaturedLinkTopRightArrowCircle, Footer, FooterCTABottomLines, FooterCTATopLines, FooterFeaturedLinksArrow, GeniusFaviconIcon, GlobalContext, Header, HeaderLogoBottom, HeaderLogoTop, type IconProps, type ImageProps, InputCloseIcon, LeadersGridPlusCircle, Link, type LinkGroupProps, type LinkProps, LinkTypeRenderer, LinkedinLogo, MARKETING_SITE_ORIGIN, MinusCircle, MobileChevron, NavLeftIcon, PlayArrow, PlusCircle, Providers, RightArrow, RightArrowCircle, type ScreenName, SearchIcon, SiteShell, SliderCircleArrow, StockArrow, TestimonialSliderArrow, type TextCardProps, TopRightArrowCircle, UlItemBulletOrange, type WpImageProps, Xlogo, YoutubeLogo, colors, fontFamily, resolveMarketingNavUrl, rewriteHeaderNavToMarketingSite, screens, spacing };

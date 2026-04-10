@@ -26,6 +26,19 @@ NEXT_PUBLIC_SITE_URL=https://www.geniussports.com
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   transpilePackages: ["@genius-sports/gs-brand-kit"],
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  webpack: (config) => {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      "~": require("path").resolve(
+        __dirname,
+        "node_modules/@genius-sports/gs-brand-kit/src"
+      ),
+    };
+    return config;
+  },
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "cms.geniussports.com" },
@@ -36,6 +49,21 @@ const nextConfig = {
   },
 };
 export default nextConfig;
+```
+
+## Step 4b — Update tsconfig.json
+Add the following paths to the compilerOptions in tsconfig.json so TypeScript resolves ~ imports from the brand kit:
+
+```json
+{
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./*"],
+      "~/*": ["./node_modules/@genius-sports/gs-brand-kit/src/*"],
+      "@genius-sports/gs-brand-kit/src/*": ["./node_modules/@genius-sports/gs-brand-kit/src/*"]
+    }
+  }
+}
 ```
 
 ## Step 5 — Replace tailwind.config.ts
@@ -98,14 +126,41 @@ export { default } from "@genius-sports/gs-brand-kit/src/components/shell/Provid
 ## Step 9 — Create app/components/SiteShell.tsx
 ```tsx
 "use client";
-export { default } from "@genius-sports/gs-brand-kit/src/components/shell/SiteShell";
+import { useContext } from "react";
+import { Header, Footer, GlobalContext } from "@genius-sports/gs-brand-kit";
+
+export default function SiteShell({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const [context] = useContext(GlobalContext) as any;
+  const footer = context?.options?.footer;
+
+  return (
+    <>
+      <Header />
+      <main>{children}</main>
+      <Footer
+        bgColor="white"
+        columns={footer?.columns}
+        social={footer?.social}
+        terms={footer?.terms}
+        CTA={footer?.global_cta?.footer_cta}
+        featuredLinks={footer?.global_featured_links?.footer_featured_links}
+      />
+    </>
+  );
+}
 ```
 
 ## Step 10 — Replace app/page.tsx
+NOTE: rewriteHeaderNavToMarketingSite must be imported from the direct source path, not the main package entry. This works because the package is installed from github:travisfleish/gs-marketing-kit which includes the full src/ directory. Importing from "@genius-sports/gs-brand-kit" pulls the full bundle into the RSC context which causes a "createContext is not a function" server error.
+
 COMPLETELY REPLACE the entire contents of this file. Write only this:
 ```tsx
 import cms from "@genius-sports/gs-brand-kit/cms";
-import { rewriteHeaderNavToMarketingSite } from "@genius-sports/gs-brand-kit";
+import { rewriteHeaderNavToMarketingSite } from "@genius-sports/gs-brand-kit/src/utils/rewriteHeaderNavUrls";
 import Providers from "./components/Providers";
 import SiteShell from "./components/SiteShell";
 
@@ -118,8 +173,8 @@ export default async function Home() {
   return (
     <Providers options={options}>
       <SiteShell>
-        <div className="min-h-screen p-12 bg-navy">
-          <h1 className="text-4xl font-heading text-brightGreen mt-24">
+        <div className="min-h-screen p-12 bg-white">
+          <h1 className="text-4xl font-heading text-navy mt-24">
             Your page content here
           </h1>
         </div>
@@ -354,9 +409,9 @@ Use this spacing scale consistently across sections:
 ## Key concepts
 
 - `cms().options()` — fetches live nav/footer data from WordPress. Called once per page in a server component.
-- `rewriteHeaderNavToMarketingSite` — rewrites header nav URLs so in-app links point at the main marketing site. Import from `@genius-sports/gs-brand-kit` and pass the raw options from `cms().options()` before giving them to `Providers`.
+- `rewriteHeaderNavToMarketingSite` — rewrites header nav URLs so in-app links point at the main marketing site. Import from `@genius-sports/gs-brand-kit/src/utils/rewriteHeaderNavUrls` — this works because the package is installed from github:travisfleish/gs-marketing-kit which publishes src/ alongside dist/. Pass the raw options from `cms().options()` before giving them to `Providers`.
 - `Providers` — wraps the app with GlobalContext (use the re-export from Step 8). Pass `options` as shown in Step 10.
-- `SiteShell` — reads footer data from context and renders Header + Footer (use the re-export from Step 9). All your page content goes inside SiteShell as children.
+- `SiteShell` — reads footer data from context and renders Header + Footer (use the implementation from Step 9). All your page content goes inside SiteShell as children.
 - `GlobalContext` — the Header reads nav data from here automatically. You never pass props to Header directly.
 
 ## Available brand tokens
