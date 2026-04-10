@@ -2,6 +2,9 @@ import cms from "@genius-sports/gs-brand-kit/cms";
 import Providers from "./components/Providers";
 import SiteShell from "./components/SiteShell";
 
+/** Avoid calling the WordPress API during `next build` (prerender); render on each request instead. */
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
   const options = await cms().options();
 
