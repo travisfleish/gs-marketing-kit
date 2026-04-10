@@ -9825,9 +9825,17 @@ function HorizontalBars({
     item
   )) })) });
 }
+function LegalMasthead({ masthead }) {
+  return /* @__PURE__ */ jsx158("div", { className: "flex flex-col bg-white", children: /* @__PURE__ */ jsx158("div", { className: "legal__masthead bg-blue", children: /* @__PURE__ */ jsx158("div", { className: "container", children: /* @__PURE__ */ jsxs130("div", { className: "sm:py-30 py-20 text-white md:py-32", children: [
+    /* @__PURE__ */ jsx158("h1", { className: "mb-5 tracking-[-0.0em] md:mb-7", dangerouslySetInnerHTML: { __html: masthead.heading } }),
+    /* @__PURE__ */ jsx158("p", { className: "text-18 text-white/80", children: `Last updated: ${masthead == null ? void 0 : masthead.last_updated}` })
+  ] }) }) }) });
+}
+var LegalMasthead_default;
 var init_LegalMasthead = __esm({
   "src/components/landing/Legal/components/LegalMasthead.tsx"() {
     init_SubmenuWrapper();
+    LegalMasthead_default = LegalMasthead;
   }
 });
 
@@ -10584,12 +10592,19 @@ var init_ArticleTextStrokeStackList = __esm({
 init_Button();
 init_Button();
 init_TextLink();
+init_TextLink();
 init_Link();
 init_LinkGroup();
+init_LinkGroup();
+init_Asset();
 init_Asset();
 init_AssetVideo();
+init_AssetVideo();
+init_Icon();
 init_Icon();
 init_RivePlayer();
+init_RivePlayer();
+init_HighlightedText();
 init_HighlightedText();
 
 // src/components/elements/text/TextCard.tsx
@@ -10691,21 +10706,58 @@ var TextCard_default = TextCard;
 
 // src/components/elements/index.ts
 init_PillTag();
+init_PillTag();
+init_PostTag();
 init_PostTag();
 init_PodcastSpring();
+init_PodcastSpring();
+init_PostAsideSubscribe();
 init_PostAsideSubscribe();
 
 // src/components/elements/CustomLines.tsx
 import clsx8 from "clsx";
 import { jsx as jsx16 } from "react/jsx-runtime";
+function CustomLines({
+  lineNumber = 3,
+  lineDirection = "horizontal",
+  className = "",
+  lineClassName = "",
+  initialLineWidth = 8,
+  initialSpacing = 4,
+  widthFactor = 0.4,
+  spacingFactor = 0.7
+}) {
+  return /* @__PURE__ */ jsx16("div", { className: clsx8("flex h-full w-full", className, lineDirection === "horizontal" && "flex-row", lineDirection === "vertical" && "flex-col"), children: Array(lineNumber).fill("").map((_, index) => /* @__PURE__ */ jsx16(
+    "div",
+    {
+      style: __spreadValues(__spreadValues(__spreadValues(__spreadValues({}, lineDirection === "horizontal" && { width: initialLineWidth / (1 + index * widthFactor), height: "100%" }), lineDirection === "vertical" && { height: initialLineWidth / (1 + index * widthFactor), width: "100%" }), lineDirection === "horizontal" && { marginRight: initialSpacing * (1 + index * spacingFactor) }), lineDirection === "vertical" && { marginBottom: initialSpacing * (1 + index * spacingFactor) }),
+      className: `bg-lightGrey ${lineClassName}`
+    },
+    `custom-line-${index}`
+  )) });
+}
+var CustomLines_default = CustomLines;
 
 // src/components/elements/index.ts
 init_Icons();
 
 // src/components/elements/WpHotkey.tsx
 import { useHotkeys } from "react-hotkeys-hook";
+function WpHotkey({ id }) {
+  useHotkeys(
+    "w+p+m",
+    () => {
+      if (typeof window !== "undefined" && id) {
+        window.open(`${process.env.NEXT_PUBLIC_WORDPRESS_BASE_URL}/wp-admin/post.php?post=${id}&action=edit`);
+      }
+    },
+    [id]
+  );
+  return null;
+}
 
 // src/components/elements/index.ts
+init_TextStrokeStack();
 init_TextStrokeStack();
 init_Wp();
 
@@ -11633,6 +11685,49 @@ init_MobileNav();
 import { NextSeo } from "next-seo";
 import Head from "next/head";
 import { jsx as jsx48, jsxs as jsxs35 } from "react/jsx-runtime";
+function Seo({ page }) {
+  var _a, _b, _c, _d, _e, _f, _g, _h;
+  return /* @__PURE__ */ jsxs35("div", { children: [
+    (page == null ? void 0 : page.seo) && /* @__PURE__ */ jsx48(
+      NextSeo,
+      {
+        title: page.seo.title,
+        description: page.seo.description,
+        canonical: page.url,
+        noindex: (_a = page.seo.robots) == null ? void 0 : _a.includes("noindex"),
+        nofollow: (_b = page.seo.robots) == null ? void 0 : _b.includes("nofollow"),
+        robotsProps: {
+          noarchive: (_c = page.seo.robots) == null ? void 0 : _c.includes("noarchive"),
+          noimageindex: (_d = page.seo.robots) == null ? void 0 : _d.includes("noimageindex"),
+          nosnippet: (_e = page.seo.robots) == null ? void 0 : _e.includes("nosnippet"),
+          notranslate: (_f = page.seo.robots) == null ? void 0 : _f.includes("notranslate")
+        },
+        openGraph: {
+          url: page.url,
+          title: page.seo.title,
+          description: page.seo.description,
+          images: [
+            {
+              url: page.seo.image
+            }
+          ]
+        }
+      }
+    ),
+    /* @__PURE__ */ jsxs35(Head, { children: [
+      /* @__PURE__ */ jsx48("meta", { name: "viewport", content: "initial-scale=1.0, width=device-width" }),
+      /* @__PURE__ */ jsx48("link", { rel: "apple-touch-icon", sizes: "180x180", href: "/images/favicons/apple-touch-icon.png" }),
+      /* @__PURE__ */ jsx48("link", { rel: "icon", type: "image/png", sizes: "32x32", href: "/images/favicons/favicon-32x32.png" }),
+      /* @__PURE__ */ jsx48("link", { rel: "icon", type: "image/png", sizes: "16x16", href: "/images/favicons/favicon-16x16.png" }),
+      /* @__PURE__ */ jsx48("link", { rel: "manifest", href: "/images/favicons/site.webmanifest" }),
+      /* @__PURE__ */ jsx48("link", { rel: "mask-icon", href: "/static/images/favicons/safari-pinned-tab.svg", color: "#0000DC" }),
+      /* @__PURE__ */ jsx48("meta", { name: "msapplication-TileColor", content: "#0000DC" }),
+      /* @__PURE__ */ jsx48("meta", { name: "theme-color", content: "#0000DC" }),
+      /* @__PURE__ */ jsx48("meta", { name: "twitter:card", content: "summary" }),
+      ((_g = page == null ? void 0 : page.seo) == null ? void 0 : _g.schema) && /* @__PURE__ */ jsx48("script", { type: "application/ld+json", dangerouslySetInnerHTML: { __html: JSON.stringify((_h = page == null ? void 0 : page.seo) == null ? void 0 : _h.schema) } })
+    ] })
+  ] });
+}
 
 // src/components/global/index.ts
 init_Portal();
@@ -11643,6 +11738,66 @@ init_ColorHelpers();
 import { useEffect as useEffect11, useState as useState10 } from "react";
 init_Wp();
 import { Fragment as Fragment6, jsx as jsx50, jsxs as jsxs37 } from "react/jsx-runtime";
+function isDateBetween2(currentDate, startDate, endDate) {
+  return currentDate >= startDate && currentDate <= endDate;
+}
+function ExitPopup(props) {
+  const {
+    exit_popup: { id, image, theme_colours, form, show_popup = false, text_card, schedule_banner, start_date, end_date, show_popup_all_pages },
+    showPopupOnPage
+  } = props;
+  const [showPopup, setShowPopup] = useState10(false);
+  const isPopupDateBetween = schedule_banner ? isDateBetween2(/* @__PURE__ */ new Date(), new Date(start_date), new Date(end_date)) : false;
+  useEffect11(() => {
+    const handleMouseMove = (event) => {
+      if (!event.relatedTarget || event.relatedTarget.nodeName === "HTML") {
+        setShowPopup(true);
+      }
+    };
+    window.addEventListener("mouseout", handleMouseMove);
+    return () => window.removeEventListener("mouseout", handleMouseMove);
+  }, []);
+  if (show_popup === false || showPopup === false) return null;
+  if (schedule_banner && !isPopupDateBetween) return null;
+  if (show_popup === true && show_popup_all_pages === false && (showPopupOnPage === false || showPopupOnPage === void 0)) return null;
+  const theme = theme_colours === "none" ? "white" : theme_colours;
+  const backgroundTheme = getBackgroundAndTextColor(theme);
+  return /* @__PURE__ */ jsxs37(Fragment6, { children: [
+    /* @__PURE__ */ jsx50("div", { id: id || "exit-popup", className: "exit-popup", children: showPopup && /* @__PURE__ */ jsxs37("div", { className: "absolute inset-0 z-[999] h-full w-full bg-black bg-opacity-50", children: [
+      /* @__PURE__ */ jsx50("div", { className: "exit-popup-inner z-0 h-auto min-h-[450px] w-full max-w-[846px] overflow-hidden rounded-xl bg-white", children: /* @__PURE__ */ jsx50("div", { className: backgroundTheme, children: /* @__PURE__ */ jsxs37("div", { className: "flex h-full flex-col justify-between lg:flex-row", children: [
+        /* @__PURE__ */ jsxs37("div", { className: "mx-auto w-[80%] md:w-[50%] lg:mx-0", children: [
+          !!form && /* @__PURE__ */ jsx50("div", { className: "relative z-10 mx-auto  aspect-[10/12] max-w-[32.5rem] overflow-scroll rounded-md bg-lightGrey px-6 py-7 md:mr-0 md:rounded-[.75rem]", children: /* @__PURE__ */ jsx50("div", { className: "h-full w-full rounded-md md:rounded-[.75rem]", dangerouslySetInnerHTML: { __html: form } }) }),
+          /* @__PURE__ */ jsx50("div", { className: "h-full w-full", children: !form && /* @__PURE__ */ jsx50(WpImage, { image, className: "h-full w-full object-cover" }) })
+        ] }),
+        /* @__PURE__ */ jsxs37("div", { className: "flex-1 p-6 md:pb-14 md:pl-14 md:pr-5 md:pt-5", children: [
+          /* @__PURE__ */ jsx50("div", { className: "absolute right-6 top-6 flex justify-end md:relative", children: /* @__PURE__ */ jsx50("button", { type: "button", onClick: () => setShowPopup(false), className: "transition-colors duration-300 hover:opacity-50", children: /* @__PURE__ */ jsx50("svg", { xmlns: "http://www.w3.org/2000/svg", width: "18", height: "18", viewBox: "0 0 18 18", fill: "none", children: /* @__PURE__ */ jsx50(
+            "path",
+            {
+              d: "M7.93942 9L2.09473 3.1553L3.15538 2.09464L9.00007 7.93928L14.8447 2.09464L15.9054 3.1553L10.0607 9L15.9054 14.8446L14.8447 15.9053L9.00007 10.0607L3.15538 15.9053L2.09473 14.8446L7.93942 9Z",
+              fill: "#0D1226"
+            }
+          ) }) }) }),
+          /* @__PURE__ */ jsx50("div", { className: "flex h-full flex-col items-center justify-center md:pr-9", children: /* @__PURE__ */ jsx50(TextCard_default, { text_card }) })
+        ] })
+      ] }) }) }),
+      /* @__PURE__ */ jsx50(
+        "div",
+        {
+          className: "absolute inset-0 z-[-1] h-full w-full",
+          onClick: () => setShowPopup(false),
+          onKeyDown: () => setShowPopup(false),
+          role: "button",
+          tabIndex: 0
+        }
+      )
+    ] }) }),
+    /* @__PURE__ */ jsx50("style", { children: `
+				body{
+					overflow: hidden !important;
+				}
+			` })
+  ] });
+}
 
 // src/components/layouts/ComponentRenderer.tsx
 import React39 from "react";
@@ -13295,6 +13450,18 @@ init_text();
 init_Asset();
 init_LinkGroup();
 import { jsx as jsx190, jsxs as jsxs157 } from "react/jsx-runtime";
+function FourOhFour(props) {
+  var _a;
+  const { asset, content } = props || {};
+  return /* @__PURE__ */ jsx190("section", { className: "bg-navy", children: /* @__PURE__ */ jsx190("div", { className: "container", children: /* @__PURE__ */ jsxs157("div", { className: "flex flex-col items-center justify-center gap-8 py-24 text-center md:pb-36", children: [
+    /* @__PURE__ */ jsx190(Asset, __spreadValues({}, asset)),
+    /* @__PURE__ */ jsxs157("div", { className: "", children: [
+      /* @__PURE__ */ jsx190("h1", { className: "text-center !tracking-[-0.04em] text-white", dangerouslySetInnerHTML: { __html: getSplitBreakText({ text: content == null ? void 0 : content.heading }) } }),
+      /* @__PURE__ */ jsx190("div", { className: "mt-10 md:mt-14", children: /* @__PURE__ */ jsx190(LinkGroup_default, { links: (_a = content == null ? void 0 : content.links) == null ? void 0 : _a.links }) })
+    ] })
+  ] }) }) });
+}
+var FourOhFour_default = FourOhFour;
 
 // src/components/landing/Legal/Legal.tsx
 init_LegalMasthead();
@@ -13307,6 +13474,39 @@ init_parseSlug();
 import { useInView as useInView22 } from "framer-motion";
 import { useEffect as useEffect27, useRef as useRef34 } from "react";
 import { jsx as jsx191, jsxs as jsxs158 } from "react/jsx-runtime";
+function MainSection({ section, onSectionInView, onSectionNotInView }) {
+  const ref = useRef34(null);
+  const isInView = useInView22(ref, { amount: 0.5 });
+  useEffect27(() => {
+    if (isInView) {
+      onSectionInView == null ? void 0 : onSectionInView();
+    } else {
+      onSectionNotInView == null ? void 0 : onSectionNotInView();
+    }
+  }, [isInView, onSectionInView, onSectionNotInView]);
+  return /* @__PURE__ */ jsxs158("section", { id: parseSlug(section.heading), className: "legal-main-section flex scroll-mt-32 flex-col gap-4 md:scroll-mt-20", children: [
+    /* @__PURE__ */ jsx191(
+      "h2",
+      {
+        ref,
+        className: "text-36 font-medium",
+        dangerouslySetInnerHTML: {
+          __html: section.heading
+        }
+      }
+    ),
+    /* @__PURE__ */ jsx191(
+      "div",
+      {
+        className: "text-18 prose font-body text-[#0d1226cc]",
+        dangerouslySetInnerHTML: {
+          __html: section.content
+        }
+      }
+    )
+  ] });
+}
+var MainSection_default = MainSection;
 
 // src/components/landing/Legal/components/NavMobile.tsx
 init_parseSlug();
@@ -13316,30 +13516,220 @@ import { useRouter as useRouter6 } from "next/router";
 import { useContext as useContext7, useEffect as useEffect28, useRef as useRef35, useState as useState46 } from "react";
 import { useInView as useInView23, useMotionValueEvent as useMotionValueEvent4, useScroll as useScroll5 } from "framer-motion";
 import { jsx as jsx192, jsxs as jsxs159 } from "react/jsx-runtime";
+function NavMobile({ content }) {
+  const router = useRouter6();
+  const [context, setContext] = useContext7(GlobalContext);
+  const [showHeader, setShowHeader] = useState46(false);
+  const ref = useRef35(null);
+  const isInView = useInView23(ref, { amount: 0.4 });
+  const { scrollYProgress } = useScroll5();
+  useMotionValueEvent4(scrollYProgress, "change", (latest) => {
+    if (latest < 0.04 && !showHeader) {
+      setShowHeader(true);
+    } else if (showHeader) {
+      setShowHeader(false);
+    }
+  });
+  useEffect28(() => {
+    if (isInView && !(context == null ? void 0 : context.blockHeader)) {
+      setContext((prev) => __spreadProps(__spreadValues({}, prev), { blockHeader: true }));
+    }
+    if ((!isInView || showHeader) && (context == null ? void 0 : context.blockHeader)) {
+      setContext((prev) => __spreadProps(__spreadValues({}, prev), { blockHeader: false }));
+    }
+  }, [isInView, isInView, showHeader]);
+  return /* @__PURE__ */ jsx192("aside", { ref, className: "sticky top-0 z-10 flex w-full flex-col bg-white md:hidden", children: /* @__PURE__ */ jsxs159("div", { className: "flex items-center gap-3 border-y border-[#0d12260d] pl-5 pr-2 md:mb-7", children: [
+    /* @__PURE__ */ jsx192("span", { className: clsx68("bg-blue", "block h-[8px] w-[8px] rounded-full border") }),
+    /* @__PURE__ */ jsx192(
+      "select",
+      {
+        className: "text-16 my-3 block w-full border-none font-medium focus:outline-none focus:ring-0",
+        onChange: (e) => {
+          router.push(`#${parseSlug(e.target.value)}`);
+        },
+        children: (content == null ? void 0 : content.length) > 0 && (content == null ? void 0 : content.map(({ section }) => {
+          const { heading } = section;
+          return /* @__PURE__ */ jsx192("option", { value: `#${parseSlug(heading)}`, children: heading }, heading);
+        }))
+      }
+    )
+  ] }) });
+}
+var NavMobile_default = NavMobile;
 
 // src/components/landing/Legal/components/NavDesktop.tsx
 init_parseSlug();
 import { LayoutGroup as LayoutGroup3, motion as motion10 } from "framer-motion";
 import { jsx as jsx193, jsxs as jsxs160 } from "react/jsx-runtime";
+function NavDesktop({ content, activeSection, onItemClick }) {
+  return /* @__PURE__ */ jsx193("aside", { className: "sticky top-20 hidden w-full max-w-[30%] flex-shrink-0 flex-col gap-y-5 md:flex xl:max-w-[300px]", children: (content == null ? void 0 : content.length) > 0 && (content == null ? void 0 : content.map(({ nav, section }) => {
+    const isActive = activeSection === (section == null ? void 0 : section.heading) || activeSection === (nav == null ? void 0 : nav.heading);
+    return /* @__PURE__ */ jsxs160("nav", { className: "flex items-center gap-4", children: [
+      /* @__PURE__ */ jsx193(LayoutGroup3, { children: isActive && /* @__PURE__ */ jsx193(motion10.span, { layoutId: "nav-indicator", layout: "position", className: "h-2 w-2 rounded-full bg-blue" }) }),
+      /* @__PURE__ */ jsx193(
+        motion10.a,
+        {
+          layout: true,
+          href: `#${parseSlug(section == null ? void 0 : section.heading)}`,
+          onClick: () => {
+            onItemClick == null ? void 0 : onItemClick(section == null ? void 0 : section.heading);
+          },
+          className: "text-16 block text-navy/60",
+          dangerouslySetInnerHTML: {
+            __html: (nav == null ? void 0 : nav.heading) || (section == null ? void 0 : section.heading)
+          }
+        }
+      )
+    ] }, section.heading);
+  })) });
+}
+var NavDesktop_default = NavDesktop;
 
 // src/components/landing/Legal/components/LegalMain.tsx
 import { jsx as jsx194, jsxs as jsxs161 } from "react/jsx-runtime";
+function LegalMain({ content }) {
+  var _a, _b;
+  const [activeSections, setActiveSections] = useState47([]);
+  const [mostTopSection, setMostTopSection] = useState47((_b = (_a = content == null ? void 0 : content[0]) == null ? void 0 : _a.section) == null ? void 0 : _b.heading);
+  const [lastMostTopSection, setLastMostTopSection] = useState47(null);
+  const containerRef = useRef36(null);
+  useLayoutEffect(() => {
+    const originalSections = content == null ? void 0 : content.map(({ section }) => section.heading);
+    const topSection = activeSections == null ? void 0 : activeSections.reduce((acc, curr) => {
+      if (originalSections.indexOf(curr) < originalSections.indexOf(acc)) {
+        return curr;
+      }
+      return acc;
+    }, activeSections[0]);
+    setMostTopSection(topSection);
+    if ((activeSections == null ? void 0 : activeSections.length) > 0) {
+      setLastMostTopSection(topSection);
+    } else {
+      setMostTopSection(lastMostTopSection);
+    }
+  }, [activeSections, content, lastMostTopSection]);
+  const onMainSectionInViewHandler = (section) => {
+    setActiveSections((prev) => {
+      if (!prev.includes(section.heading)) {
+        return [...prev, section.heading];
+      }
+      return prev;
+    });
+  };
+  const onMainSectionNotInViewHandler = (section) => {
+    setActiveSections((prev) => {
+      if (prev.includes(section.heading)) {
+        return prev.filter((heading) => heading !== section.heading);
+      }
+      return prev;
+    });
+  };
+  return /* @__PURE__ */ jsx194("div", { ref: containerRef, className: "legal-main relative bg-white pb-12 text-navy md:py-[120px]", children: /* @__PURE__ */ jsx194("div", { className: "container", children: /* @__PURE__ */ jsxs161("div", { className: "flex flex-col items-start gap-6 md:flex-row", children: [
+    /* @__PURE__ */ jsx194(NavMobile_default, { content }),
+    /* @__PURE__ */ jsx194(
+      NavDesktop_default,
+      {
+        content,
+        activeSection: mostTopSection
+      }
+    ),
+    /* @__PURE__ */ jsx194("div", { className: "relative flex flex-col gap-10 md:gap-20", children: (content == null ? void 0 : content.length) > 0 && (content == null ? void 0 : content.map(({ section }) => /* @__PURE__ */ jsx194(
+      MainSection_default,
+      {
+        section,
+        onSectionInView: () => onMainSectionInViewHandler(section),
+        onSectionNotInView: () => onMainSectionNotInViewHandler(section)
+      },
+      section.heading
+    ))) })
+  ] }) }) });
+}
+var LegalMain_default = LegalMain;
 
 // src/components/landing/Legal/Legal.tsx
 import { jsx as jsx195, jsxs as jsxs162 } from "react/jsx-runtime";
+function Legal(props) {
+  const { masthead, content } = props;
+  return /* @__PURE__ */ jsxs162("div", { className: "legal", children: [
+    /* @__PURE__ */ jsx195(LegalMasthead_default, { masthead }),
+    /* @__PURE__ */ jsx195(LegalMain_default, { content })
+  ] });
+}
+var Legal_default = Legal;
 
 // src/components/layouts/LandingPage.tsx
 import { jsx as jsx196 } from "react/jsx-runtime";
+function LandingPage({ layout, four_oh_four, legal }) {
+  if (layout === "fourOhFour") {
+    return /* @__PURE__ */ jsx196(FourOhFour_default, __spreadValues({}, four_oh_four));
+  }
+  if (layout === "legal") {
+    return /* @__PURE__ */ jsx196(Legal_default, __spreadValues({}, legal));
+  }
+}
+var LandingPage_default = LandingPage;
 
 // src/components/layouts/Section/Section.tsx
 import clsx69 from "clsx";
 init_useSection();
 import { jsx as jsx197 } from "react/jsx-runtime";
+function Section(props) {
+  const {
+    components = [],
+    id = "",
+    classnames = "",
+    inner_spacing = "max",
+    has_container = false,
+    overflow = false,
+    background,
+    padding_top = "huge",
+    padding_bottom = "huge",
+    is_rounded = false,
+    rounded_options = {}
+  } = props;
+  const { paddingTopMap, paddingBottomMap, innerSpacingMap, getSectionColors } = useSection_default();
+  const outerClasses = clsx69(classnames, [
+    "scroll-mt-10 sm:scroll-mt-24",
+    overflow ? "overflow-visible" : "overflow-hidden",
+    // Set overflow
+    getSectionColors(background == null ? void 0 : background.background_color),
+    // Set outer background
+    paddingTopMap == null ? void 0 : paddingTopMap[padding_top],
+    paddingBottomMap == null ? void 0 : paddingBottomMap[padding_bottom],
+    is_rounded && has_container ? "container" : ""
+    // Add container to outer element if is rounded section and has_container set to true,
+  ]);
+  const innerClasses = clsx69([
+    !is_rounded && has_container || is_rounded && (rounded_options == null ? void 0 : rounded_options.has_inner_container) ? "container" : "",
+    // Set if using container or not
+    innerSpacingMap == null ? void 0 : innerSpacingMap[inner_spacing],
+    is_rounded ? "sm:rounded-2xl" : "",
+    // Set it to be rounded
+    is_rounded ? getSectionColors(rounded_options == null ? void 0 : rounded_options.inner_background_color) : "",
+    // Set inner background color options
+    is_rounded ? `${paddingBottomMap == null ? void 0 : paddingBottomMap[rounded_options == null ? void 0 : rounded_options.inner_padding_bottom]} ${paddingTopMap == null ? void 0 : paddingTopMap[rounded_options == null ? void 0 : rounded_options.inner_padding_top]}` : ""
+  ]);
+  return /* @__PURE__ */ jsx197("section", { id, className: clsx69("section__outer", outerClasses), children: /* @__PURE__ */ jsx197("div", { className: clsx69("section__inner", innerClasses), children: /* @__PURE__ */ jsx197(ComponentRenderer, { components, sectionBG: background == null ? void 0 : background.background_color }) }) });
+}
+var Section_default = Section;
 
 // src/components/layouts/LayoutRenderer.tsx
 import { jsx as jsx198, jsxs as jsxs163 } from "react/jsx-runtime";
+function LayoutRenderer({ sections, ID, page_settings = null }) {
+  if (!sections) return null;
+  return sections == null ? void 0 : sections.map((section, i) => {
+    var _a;
+    return /* @__PURE__ */ jsxs163(React40.Fragment, { children: [
+      (section == null ? void 0 : section.acf_fc_layout) === "landing_page" && /* @__PURE__ */ jsx198(LandingPage_default, __spreadValues({}, section)),
+      (section == null ? void 0 : section.acf_fc_layout) === "section" && /* @__PURE__ */ jsx198(Section_default, __spreadValues({}, section)),
+      (section == null ? void 0 : section.acf_fc_layout) === "reusable_block" && /* @__PURE__ */ jsx198(LayoutRenderer, { sections: section.block.acf.sections, ID: (_a = section == null ? void 0 : section.block) == null ? void 0 : _a.ID })
+    ] }, `${ID + section.acf_fc_layout + i}`);
+  });
+}
+var LayoutRenderer_default = LayoutRenderer;
 
 // src/components/layouts/index.ts
+init_useSection();
 init_useSection();
 
 // src/components/global/PasswordProtect.tsx
@@ -13701,6 +14091,9 @@ var spacing = {
 // src/index.ts
 init_context();
 export {
+  Asset,
+  AssetVideo_default as AssetVideo,
+  Banner,
   Button_default as Button,
   CTASpring,
   ChevronDown,
@@ -13715,6 +14108,8 @@ export {
   ContactItemUpperSpring,
   ContactSalesFormLines,
   ContactTopRightArrowCircle,
+  CustomLines_default as CustomLines,
+  ExitPopup,
   FacebookLogo,
   FeaturedLinkTopRightArrowCircle,
   Footer,
@@ -13726,27 +14121,48 @@ export {
   Header,
   HeaderLogoBottom,
   HeaderLogoTop,
+  HeaderSpacer_default as HeaderSpacer,
+  HighlightedText_default as HighlightedText,
+  Icon_default as Icon,
   InputCloseIcon,
+  LandingPage_default as LandingPage,
+  LayoutRenderer_default as LayoutRenderer,
   LeadersGridPlusCircle,
+  LightBoxOverlay_default as LightboxOverlay,
   Link,
+  LinkGroup_default as LinkGroup,
   LinkTypeRenderer,
   LinkedinLogo,
+  Logo,
   MARKETING_SITE_ORIGIN,
   MinusCircle,
   MobileChevron,
+  MobileNav,
   NavLeftIcon,
+  PillTag_default as PillTag,
   PlayArrow,
   PlusCircle,
+  PodcastSpring_default as PodcastSpring,
+  Portal_default as Portal,
+  PostAsideSubscribe_default as PostAsideSubscribe,
+  PostTag_default as PostTag,
   Providers,
   RightArrow,
   RightArrowCircle,
+  RivePlayer,
   SearchIcon,
+  Section_default as Section,
+  Seo,
   SiteShell,
   SliderCircleArrow,
   StockArrow,
   TestimonialSliderArrow,
+  TextCard_default as TextCard,
+  TextLink_default as TextLink,
+  TextStrokeStack_default as TextStrokeStack,
   TopRightArrowCircle,
   UlItemBulletOrange,
+  WpHotkey,
   Xlogo,
   YoutubeLogo,
   colors,
@@ -13754,5 +14170,6 @@ export {
   resolveMarketingNavUrl,
   rewriteHeaderNavToMarketingSite,
   screens,
-  spacing
+  spacing,
+  useSection_default as useSection
 };

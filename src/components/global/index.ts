@@ -1,10 +1,10 @@
 export { default as Header } from './Header';
 export { default as Footer } from './Footer/Footer';
-export * from './Banner';
-export * from './MobileNav';
-export * from './Logo';
-export * from './Seo';
-export * from './HeaderSpacer';
-export * from './Portal';
-export * from './LightBoxOverlay';
-export * from './ExitPopup/ExitPopup';
+export { default as Banner } from './Banner';
+export { default as MobileNav } from './MobileNav';
+export { default as Logo, HeaderLogoTop, HeaderLogoBottom } from './Logo';
+export { default as Seo } from './Seo';
+export { default as HeaderSpacer } from './HeaderSpacer';
+export { default as Portal } from './Portal';
+export { default as LightboxOverlay } from './LightBoxOverlay';
+export { default as ExitPopup } from './ExitPopup/ExitPopup';

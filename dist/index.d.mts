@@ -1,6 +1,6 @@
 import * as react_jsx_runtime from 'react/jsx-runtime';
 import * as React$1 from 'react';
-import React__default, { HTMLProps } from 'react';
+import React__default, { ReactNode, HTMLProps } from 'react';
 
 type ButtonProps = {
     link?: {
@@ -20,6 +20,19 @@ type ButtonProps = {
     onMouseLeave?: () => void;
 };
 declare function Button({ link, button, size, className, children, onClick, onMouseEnter, onMouseLeave, ...other }: ButtonProps): react_jsx_runtime.JSX.Element;
+
+type TextLinkProps = {
+    link?: {
+        title: string;
+        url: string;
+    };
+    text_link: {
+        background_color: "navy" | "white";
+    };
+    className?: string;
+    children?: ReactNode;
+};
+declare function TextLink({ className, link, children, text_link }: TextLinkProps): react_jsx_runtime.JSX.Element;
 
 interface ImageProps {
     url: string;
@@ -60,11 +73,102 @@ interface AssetProps {
     fill?: boolean;
     className?: string;
 }
+declare function Asset({ isHovered, type, animation, video, priority, ratio, image, fill, className }: AssetProps): react_jsx_runtime.JSX.Element;
+
+type ProfileCardProps = {
+    card: {
+        avatar: ImageProps;
+        job_role: string;
+        logo: ImageProps;
+        name: string;
+    };
+    variant?: "light" | "dark";
+};
 
 type WpLinkType = {
 	title?: string;
 	url?: string;
 	target?: string;
+};
+
+type SectionProps = {
+	components?: any[];
+	id?: string;
+	classnames?: string;
+	inner_spacing?: string;
+	has_container?: boolean;
+	overflow?: boolean;
+	background?: {
+		background_color?: string;
+	};
+	padding_top?: string;
+	padding_bottom?: string;
+	is_rounded?: boolean;
+	rounded_options?: {
+		has_inner_container?: boolean;
+		inner_background_color?: string;
+		inner_padding_top?: string;
+		inner_padding_bottom?: string;
+	};
+	right_align_content?: boolean;
+	isFirstSection?: boolean;
+};
+
+interface WpPageSettings {
+	header: {
+		hide?: boolean;
+		color: "match-first-section" | "white" | "navy" | "brightGreen" | "lightBlue" | "lightOrange" | "lightPurple" | "purple" | "blue";
+		show_toast_bar?: boolean;
+		show_popup_page?: boolean;
+	};
+	footer: {
+		hide_all?: boolean;
+		color: "navy" | "white";
+		hide_cta: boolean;
+		hide_featured_links: boolean;
+	};
+}
+
+// TODO : Remove extends, extend page in base post template files instead
+interface WpPage extends WpPost, WpNewsPost, WpCustomerStory {
+	author: {
+		name: string;
+		acf: {
+			profile_picture: ImageProps;
+			external_redirect?: string;
+		};
+	};
+	footer_cta: FooterCTA;
+	footer_featured_links: FooterFeaturedLink[];
+	ID: number;
+	page_settings: WpPageSettings;
+	post_author: string | number;
+	post_date: string;
+	post_date_gmt: string;
+	post_modified: string;
+	post_modified_gmt: string;
+	post_content: string;
+	post_title: string;
+	post_excerpt: string;
+	post_status: "draft" | "publish";
+	post_password?: string;
+	post_name: string;
+	post_parent: string;
+	guid: string;
+	menu_order: number;
+	post_type: string;
+	url: string;
+	flexible_content: FlexibleContent[];
+	sections: FlexibleContent[];
+	seo: WpSeo;
+}
+
+type WpSeo = {
+	title?: string;
+	description?: string;
+	robots?: string;
+	image?: string;
+	schema?: string;
 };
 
 interface FooterCol {
@@ -111,6 +215,222 @@ interface WpOptionsFooter {
 	};
 }
 
+type FlexibleContentLayouts = "fourOhFour" | "legal";
+
+type FlexibleContent = {
+	acf_fc_layout: "section" | "landing_page";
+	background: {
+		background_color: string;
+	};
+	landing_page: any;
+	section: SectionProps;
+	layout: FlexibleContentLayouts;
+	four_oh_four: FourOhFourType;
+	legal: LegalType;
+};
+
+interface WpSimpleTextCard {
+	content?: string;
+	heading?: string;
+	subheading?: string;
+	links?: { links: LinkProps[] };
+}
+
+// Landing pages
+interface FourOhFourType {
+	content: WpSimpleTextCard;
+	asset: AssetProps;
+}
+
+interface LegalType {
+	masthead: {
+		heading: string;
+		last_updated: string;
+	};
+	content: {
+		nav: {
+			heading: string;
+			disable_anchor: boolean;
+		};
+		section: {
+			heading: string;
+			content: string;
+		};
+	}[];
+}
+interface WpDefaultPostFields {
+	ID: number;
+	featured_image?: {
+		width: number;
+		height: number;
+		src: string;
+	};
+	permalink: string;
+	post_title: string;
+}
+
+type WpCustomTaxonomyItem = {
+	id: number;
+	name: string;
+	slug: string;
+};
+
+type WpGuestAuthor = {
+	avatar: ImageProps;
+	name: string;
+	role: string;
+	company: string;
+};
+
+type VisualTagsType = {
+	custom_tags: { tag: string }[];
+	location: string;
+	tags: string[];
+};
+
+interface WpCustomerStory extends WpDefaultPostFields {
+	acf: {
+		customer_colour: string;
+		key_quote: {
+			quotation: string;
+			name: string;
+			organisation: string;
+			role: string;
+		};
+		media: {
+			logo: ImageProps;
+			logo_light: ImageProps;
+			thumbnail: ImageProps;
+		};
+	};
+	customer_stories_categories: WpCustomTaxonomyItem[];
+	products: WpCustomTaxonomyItem[];
+	inner_page: {
+		article: {
+			components: any[]; // Update
+			intro?: string;
+		};
+		masthead: {
+			asset: AssetProps;
+		};
+		other: {
+			full_width_testimonial: {
+				add_full_width_testimonial: boolean;
+				content: {
+					testimonial: string;
+					thumbnail: ImageProps;
+					image: ImageProps;
+					job_role: string;
+					author: {
+						name: string;
+						job_role: string;
+						company: string;
+					};
+				};
+			};
+		};
+	};
+	banner_sidebar: {
+		logo: ImageProps;
+		show_sidebar: boolean;
+		company_name: string;
+		location: string;
+		revenue: string;
+		industry: string;
+		objective: string;
+		button_text: string;
+		button_url: string;
+		open_in_new_tab: boolean;
+	};
+	media: {
+		logo: ImageProps;
+		light_logo: ImageProps;
+		thumbnail: ImageProps;
+	};
+	related_articles: WpCustomerStory[];
+	post_date_gmt: string;
+}
+
+interface WpPost extends WpDefaultPostFields {
+	acf: {
+		preview: {
+			thumbnail: ImageProps;
+			external_link?: string;
+		};
+		guest_author?: WpGuestAuthor;
+		show_guest_author?: boolean;
+		visual_tags?: VisualTagsType;
+	};
+	event: {
+		event_form_source: string;
+		address: string;
+		date: {
+			day: string;
+			month: string;
+		};
+		time: {
+			start_time: string;
+			start_time_label: string;
+			end_time: string;
+			end_time_label: string;
+		};
+		speakers: {
+			cards: ProfileCardProps["card"][];
+		};
+	};
+	inner_page: {
+		article: {
+			components: any[]; // Update
+			intro?: string;
+		};
+		masthead: {
+			asset: AssetProps;
+			guest_author: {
+				show_guest_author: boolean;
+				guest_author: WpGuestAuthor;
+			};
+			heading?: string;
+		};
+	};
+	layout: "blog" | "event" | "webinar";
+	categories: WpCustomTaxonomyItem[];
+	post_date_gmt: string;
+	related_articles: WpPost[];
+	tags: string[] | { id: number; name: string; slug: string }[];
+	webinar: {
+		webinar_form_source: string;
+		hosts: {
+			cards: ProfileCardProps["card"][];
+		};
+	};
+	author?: {
+		name?: string;
+		role?: string;
+		profile_picture?: ImageProps;
+	};
+	visual_tags?: VisualTagsType;
+}
+
+interface WpNewsPost extends WpDefaultPostFields {
+	newsroom_categories: string[];
+	inner_page: {
+		masthead: {
+			image: ImageProps;
+			guest_author: {
+				show_guest_author: boolean;
+				guest_author: WpGuestAuthor;
+			};
+		};
+		article: {
+			components: any[]; // Update
+		};
+	};
+	preview: {
+		thumbnail: ImageProps;
+		external_link?: string;
+	};
+}
+
 type LinkProps = {
     link?: WpLinkType & {
         title?: string;
@@ -135,6 +455,20 @@ type LinkGroupProps = {
     noFullWidthOnMobile?: boolean;
     centered?: boolean;
 };
+declare function LinkGroup({ links, className, noFullWidthOnMobile, centered }: LinkGroupProps): react_jsx_runtime.JSX.Element;
+
+interface AssetVideoProps {
+    video?: {
+        file?: {
+            url: string;
+        };
+        show_controls?: boolean;
+        poster?: {
+            url?: string;
+        };
+    };
+}
+declare function AssetVideo({ video }: AssetVideoProps): react_jsx_runtime.JSX.Element;
 
 interface IconProps {
     priority?: boolean;
@@ -143,6 +477,26 @@ interface IconProps {
         image: WpImageProps["image"];
     };
 }
+declare function Icon({ priority, icon }: IconProps): react_jsx_runtime.JSX.Element;
+
+interface RivePlayerProps {
+    riveFile: {
+        url: string;
+    };
+    priority: boolean;
+    isHovered?: boolean;
+    runText?: boolean;
+}
+declare function RivePlayer({ riveFile, priority, isHovered, runText }: RivePlayerProps): react_jsx_runtime.JSX.Element;
+
+interface HighlightedTextProps {
+    tag: string;
+    className?: string;
+    content: string;
+    disable?: boolean;
+    color: string;
+}
+declare function HighlightedText({ tag, className, content, disable, color }: HighlightedTextProps): React__default.DOMElement<React__default.HTMLAttributes<HTMLElement>, Element>;
 
 type TextCardProps = {
     text_card: {
@@ -175,6 +529,41 @@ type TextCardProps = {
         };
     };
 };
+declare function TextCard({ text_card: { icon, subheading, heading, content, links, options: { section_max_width, custom_max_width, text_alignment, has_mobile_text_alignment, mobile_text_alignment, add_icon, section_alignment, subheading_tag, subheading_classes, heading_tag, heading_font_size, heading_classes, heading_max_width, heading_highlighted_color, content_max_width, content_font_size, content_classes, custom_y_spacing, mobile_section_alignment, }, }, }: TextCardProps): react_jsx_runtime.JSX.Element;
+
+declare function PillTag({ text }: {
+    text: any;
+}): react_jsx_runtime.JSX.Element;
+
+type PostTagProps = {
+    text: string;
+    bgColor?: string;
+    textColor?: string;
+};
+declare function PostTag({ text, bgColor, textColor }: PostTagProps): react_jsx_runtime.JSX.Element;
+
+interface PodcastSpringProps {
+    cardHovered?: boolean;
+    colour?: string;
+    heightFull?: boolean;
+}
+declare function PodcastSpring({ cardHovered, colour, heightFull }: PodcastSpringProps): react_jsx_runtime.JSX.Element;
+
+declare function PostAsideSubscribe({ heading, embed }: {
+    heading?: any;
+    embed?: any;
+}): react_jsx_runtime.JSX.Element;
+
+declare function CustomLines({ lineNumber, lineDirection, className, lineClassName, initialLineWidth, initialSpacing, widthFactor, spacingFactor, }: {
+    lineNumber?: number;
+    lineDirection?: string;
+    className?: string;
+    lineClassName?: string;
+    initialLineWidth?: number;
+    initialSpacing?: number;
+    widthFactor?: number;
+    spacingFactor?: number;
+}): react_jsx_runtime.JSX.Element;
 
 declare function FooterFeaturedLinksArrow(): react_jsx_runtime.JSX.Element;
 declare function CircleArrow(): react_jsx_runtime.JSX.Element;
@@ -276,6 +665,27 @@ declare function ContactSalesFormLines({ height, width }: {
     width?: any;
 }): react_jsx_runtime.JSX.Element;
 
+declare function WpHotkey({ id }: {
+    id: any;
+}): any;
+
+interface TextStrokeStackProps {
+    int?: number;
+    centerText: string;
+    bottomText?: string;
+    topText?: string;
+    options?: {
+        textColor?: string;
+        textSize?: "70" | "64" | "88";
+        bgColor?: string;
+        strokeColor?: "brightGreen" | "lightPurple" | "navy" | "white" | "lightBlue";
+    };
+    hideBottomRow?: boolean;
+    hideTopRow?: boolean;
+    textClassName?: string;
+}
+declare function TextStrokeStack({ centerText, topText, bottomText, options, int, hideTopRow, hideBottomRow, textClassName, }: TextStrokeStackProps): react_jsx_runtime.JSX.Element;
+
 type HeaderProps = {
     bgColor?: string;
     blockScroll?: boolean;
@@ -295,14 +705,112 @@ interface FooterProps extends Partial<WpOptionsFooter> {
 }
 declare function Footer(props: FooterProps): react_jsx_runtime.JSX.Element;
 
+declare function Banner(props: any): react_jsx_runtime.JSX.Element;
+
+declare function MobileNav({ menu, button, showMobileNav, setShowMobileNav, selectedSubmenu, setSelectedSubmenu, hasBanner }: {
+    menu?: any[];
+    button: any;
+    showMobileNav: any;
+    setShowMobileNav: any;
+    selectedSubmenu: any;
+    setSelectedSubmenu: any;
+    hasBanner: any;
+}): react_jsx_runtime.JSX.Element;
+
+declare function Logo(): react_jsx_runtime.JSX.Element;
 declare function HeaderLogoTop(): react_jsx_runtime.JSX.Element;
 declare function HeaderLogoBottom(): react_jsx_runtime.JSX.Element;
+
+type SeoProps = {
+    page: WpPage;
+};
+declare function Seo({ page }: SeoProps): react_jsx_runtime.JSX.Element;
+
+declare function HeaderSpacer({ hasBanner }: {
+    hasBanner: any;
+}): react_jsx_runtime.JSX.Element;
+
+interface Props {
+    rootId: string;
+    children: ReactNode;
+    className?: string;
+    style?: string;
+}
+declare const Portal: ({ rootId, children, className, style }: Props) => React$1.ReactPortal;
+
+interface LightboxOverlayProps {
+    children: ReactNode;
+    onClick?: () => void;
+    contentVerticalPosition?: "top" | "center";
+    hideCloseButton?: boolean;
+    disableBlur?: boolean;
+    childrenContainerClassName?: string;
+}
+declare function LightboxOverlay({ children, onClick, contentVerticalPosition, hideCloseButton, disableBlur, childrenContainerClassName, }: LightboxOverlayProps): react_jsx_runtime.JSX.Element;
+
+declare function ExitPopup(props: any): react_jsx_runtime.JSX.Element;
 
 declare function ComponentRenderer({ components, pageId, sectionBG }: {
     components?: any[];
     pageId?: any;
     sectionBG: any;
 }): react_jsx_runtime.JSX.Element[];
+
+declare function LayoutRenderer({ sections, ID, page_settings }: {
+    sections: any;
+    ID: any;
+    page_settings?: any;
+}): any;
+
+interface LandingPageProps {
+    layout: string;
+    four_oh_four: FourOhFourType;
+    legal: LegalType;
+}
+declare function LandingPage({ layout, four_oh_four, legal }: LandingPageProps): react_jsx_runtime.JSX.Element;
+
+declare function Section(props: SectionProps): react_jsx_runtime.JSX.Element;
+
+declare const useSection: () => {
+    paddingTopMap: {
+        none: string;
+        min: string;
+        tiny: string;
+        xSmall: string;
+        small: string;
+        medium: string;
+        large: string;
+        xLarge: string;
+        huge: string;
+        max: string;
+    };
+    paddingBottomMap: {
+        none: string;
+        min: string;
+        tiny: string;
+        xSmall: string;
+        small: string;
+        medium: string;
+        large: string;
+        xLarge: string;
+        huge: string;
+        max: string;
+    };
+    innerSpacingMap: {
+        none: string;
+        min: string;
+        tiny: string;
+        xSmall: string;
+        small: string;
+        medium: string;
+        large: string;
+        xLarge: string;
+        huge: string;
+        xHuge: string;
+        max: string;
+    };
+    getSectionColors: (background?: string) => string;
+};
 
 declare function SiteShell({ children, homeHref, }: {
     children: React.ReactNode;
@@ -369,4 +877,4 @@ type ScreenName = keyof typeof screens;
 
 declare const GlobalContext: React$1.Context<any[]>;
 
-export { type AssetProps, Button, CTASpring, ChevronDown, CircleArrow, CloseIcon, type ColorName, ComponentRenderer, ContactItemHighlightedLowerSpring, ContactItemHighlightedLowerSpringHover, ContactItemHighlightedUpperSpring, ContactItemHighlightedUpperSpringHover, ContactItemLowerSpring, ContactItemUpperSpring, ContactSalesFormLines, ContactTopRightArrowCircle, FacebookLogo, FeaturedLinkTopRightArrowCircle, Footer, FooterCTABottomLines, FooterCTATopLines, FooterFeaturedLinksArrow, GeniusFaviconIcon, GlobalContext, Header, HeaderLogoBottom, HeaderLogoTop, type IconProps, type ImageProps, InputCloseIcon, LeadersGridPlusCircle, Link, type LinkGroupProps, type LinkProps, LinkTypeRenderer, LinkedinLogo, MARKETING_SITE_ORIGIN, MinusCircle, MobileChevron, NavLeftIcon, PlayArrow, PlusCircle, Providers, RightArrow, RightArrowCircle, type ScreenName, SearchIcon, SiteShell, SliderCircleArrow, StockArrow, TestimonialSliderArrow, type TextCardProps, TopRightArrowCircle, UlItemBulletOrange, type WpImageProps, Xlogo, YoutubeLogo, colors, fontFamily, resolveMarketingNavUrl, rewriteHeaderNavToMarketingSite, screens, spacing };
+export { Asset, type AssetProps, AssetVideo, Banner, Button, CTASpring, ChevronDown, CircleArrow, CloseIcon, type ColorName, ComponentRenderer, ContactItemHighlightedLowerSpring, ContactItemHighlightedLowerSpringHover, ContactItemHighlightedUpperSpring, ContactItemHighlightedUpperSpringHover, ContactItemLowerSpring, ContactItemUpperSpring, ContactSalesFormLines, ContactTopRightArrowCircle, CustomLines, ExitPopup, FacebookLogo, FeaturedLinkTopRightArrowCircle, Footer, FooterCTABottomLines, FooterCTATopLines, FooterFeaturedLinksArrow, GeniusFaviconIcon, GlobalContext, Header, HeaderLogoBottom, HeaderLogoTop, HeaderSpacer, HighlightedText, Icon, type IconProps, type ImageProps, InputCloseIcon, LandingPage, LayoutRenderer, LeadersGridPlusCircle, LightboxOverlay, Link, LinkGroup, type LinkGroupProps, type LinkProps, LinkTypeRenderer, LinkedinLogo, Logo, MARKETING_SITE_ORIGIN, MinusCircle, MobileChevron, MobileNav, NavLeftIcon, PillTag, PlayArrow, PlusCircle, PodcastSpring, Portal, PostAsideSubscribe, PostTag, Providers, RightArrow, RightArrowCircle, RivePlayer, type ScreenName, SearchIcon, Section, Seo, SiteShell, SliderCircleArrow, StockArrow, TestimonialSliderArrow, TextCard, type TextCardProps, TextLink, TextStrokeStack, TopRightArrowCircle, UlItemBulletOrange, WpHotkey, type WpImageProps, Xlogo, YoutubeLogo, colors, fontFamily, resolveMarketingNavUrl, rewriteHeaderNavToMarketingSite, screens, spacing, useSection };

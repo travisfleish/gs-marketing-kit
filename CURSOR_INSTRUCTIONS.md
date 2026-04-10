@@ -405,6 +405,18 @@ Use this spacing scale consistently across sections:
 - ❌ Never use Google Fonts or system fonts — brand fonts are loaded via the package
 - ❌ Never add a custom border-radius to buttons — the Button component handles this
 - ❌ Never use `px-4 py-2 rounded` on a button — use the Button component
+- ❌ Never default a hero or page section to bg-navy — always default to bg-white unless explicitly requested
+
+---
+
+### Rule 11 — Default page background
+
+ALWAYS default to a white background unless explicitly told otherwise.
+
+- Page background: `bg-white text-navy`
+- Never default to `bg-navy` unless the user specifically asks for a dark page
+- Hero sections default to white unless told otherwise: `bg-white text-navy`
+- When building any new section or page, start from white and add color intentionally
 
 ## Key concepts
 

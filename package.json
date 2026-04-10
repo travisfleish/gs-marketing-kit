@@ -35,10 +35,12 @@
   },
   "files": [
     "dist",
-    "src"
+    "src",
+    "CATALOG.md"
   ],
   "scripts": {
-    "build": "tsup && node scripts/fix-fonts-const.mjs && node scripts/fix-tailwind-preset-dts.mjs",
+    "build": "tsup && node scripts/fix-fonts-const.mjs && node scripts/fix-tailwind-preset-dts.mjs && npm run catalog",
+    "catalog": "ts-node --project tsconfig.scripts.json scripts/generate-catalog.ts",
     "dev": "tsup --watch"
   },
   "peerDependencies": {
@@ -58,6 +60,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "tailwindcss": "^4.2.2",
+    "ts-node": "^10.9.2",
     "tsup": "^8.0.0",
     "typescript": "^5.0.0"
   },
