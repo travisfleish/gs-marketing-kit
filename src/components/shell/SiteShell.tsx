@@ -12,7 +12,7 @@ export default function SiteShell({
   children: React.ReactNode;
   homeHref?: string;
 }) {
-  const [context] = useContext(GlobalContext) as any;
+  const [context] = useContext(GlobalContext) as [{ options?: any }, unknown];
   const footer = context?.options?.footer;
 
   return (
