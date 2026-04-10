@@ -1,5 +1,5 @@
 import * as react_jsx_runtime from 'react/jsx-runtime';
-import * as React from 'react';
+import * as React$1 from 'react';
 import React__default from 'react';
 import { L as LinkProps, W as WpImageProps, a as WpOptionsFooter } from './Link-mWKhQbm-.mjs';
 export { A as AssetProps, I as ImageProps, b as Link, c as LinkTypeRenderer } from './Link-mWKhQbm-.mjs';
@@ -198,6 +198,22 @@ declare function ComponentRenderer({ components, pageId, sectionBG }: {
     sectionBG: any;
 }): react_jsx_runtime.JSX.Element[];
 
+declare function SiteShell({ children, homeHref, }: {
+    children: React.ReactNode;
+    homeHref?: string;
+}): react_jsx_runtime.JSX.Element;
+
+declare function Providers({ children, options, }: {
+    children: React.ReactNode;
+    options: any;
+}): react_jsx_runtime.JSX.Element;
+
+declare const MARKETING_SITE_ORIGIN = "https://www.geniussports.com";
+declare function resolveMarketingNavUrl(raw: string): string;
+declare function rewriteHeaderNavToMarketingSite<T extends {
+    header?: unknown;
+}>(options: T): T;
+
 declare const colors: {
     readonly navy: "#0D1226";
     readonly blue: "#0000DC";
@@ -245,6 +261,6 @@ declare const spacing: {
 type ColorName = keyof typeof colors;
 type ScreenName = keyof typeof screens;
 
-declare const GlobalContext: React.Context<any[]>;
+declare const GlobalContext: React$1.Context<any[]>;
 
-export { Button, CTASpring, ChevronDown, CircleArrow, CloseIcon, type ColorName, ComponentRenderer, ContactItemHighlightedLowerSpring, ContactItemHighlightedLowerSpringHover, ContactItemHighlightedUpperSpring, ContactItemHighlightedUpperSpringHover, ContactItemLowerSpring, ContactItemUpperSpring, ContactSalesFormLines, ContactTopRightArrowCircle, FacebookLogo, FeaturedLinkTopRightArrowCircle, Footer, FooterCTABottomLines, FooterCTATopLines, FooterFeaturedLinksArrow, GeniusFaviconIcon, GlobalContext, Header, HeaderLogoBottom, HeaderLogoTop, type IconProps, InputCloseIcon, LeadersGridPlusCircle, type LinkGroupProps, LinkProps, LinkedinLogo, MinusCircle, MobileChevron, NavLeftIcon, PlayArrow, PlusCircle, RightArrow, RightArrowCircle, type ScreenName, SearchIcon, SliderCircleArrow, StockArrow, TestimonialSliderArrow, type TextCardProps, TopRightArrowCircle, UlItemBulletOrange, WpImageProps, Xlogo, YoutubeLogo, colors, fontFamily, screens, spacing };
+export { Button, CTASpring, ChevronDown, CircleArrow, CloseIcon, type ColorName, ComponentRenderer, ContactItemHighlightedLowerSpring, ContactItemHighlightedLowerSpringHover, ContactItemHighlightedUpperSpring, ContactItemHighlightedUpperSpringHover, ContactItemLowerSpring, ContactItemUpperSpring, ContactSalesFormLines, ContactTopRightArrowCircle, FacebookLogo, FeaturedLinkTopRightArrowCircle, Footer, FooterCTABottomLines, FooterCTATopLines, FooterFeaturedLinksArrow, GeniusFaviconIcon, GlobalContext, Header, HeaderLogoBottom, HeaderLogoTop, type IconProps, InputCloseIcon, LeadersGridPlusCircle, type LinkGroupProps, LinkProps, LinkedinLogo, MARKETING_SITE_ORIGIN, MinusCircle, MobileChevron, NavLeftIcon, PlayArrow, PlusCircle, Providers, RightArrow, RightArrowCircle, type ScreenName, SearchIcon, SiteShell, SliderCircleArrow, StockArrow, TestimonialSliderArrow, type TextCardProps, TopRightArrowCircle, UlItemBulletOrange, WpImageProps, Xlogo, YoutubeLogo, colors, fontFamily, resolveMarketingNavUrl, rewriteHeaderNavToMarketingSite, screens, spacing };

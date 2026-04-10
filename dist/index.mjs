@@ -13553,6 +13553,104 @@ import { jsx as jsx231, jsxs as jsxs193 } from "react/jsx-runtime";
 // src/components/templates/SingleResource/SingleResource.tsx
 import { Fragment as Fragment35, jsx as jsx232, jsxs as jsxs194 } from "react/jsx-runtime";
 
+// src/components/shell/SiteShell.tsx
+import { useContext as useContext9 } from "react";
+init_context();
+
+// src/utils/rewriteHeaderNavUrls.ts
+var MARKETING_SITE_ORIGIN = "https://www.geniussports.com";
+function isLikelyStaticAssetUrl(raw) {
+  try {
+    const u = new URL(raw);
+    if (u.pathname.includes("/wp-content/") || u.pathname.includes("/wp-includes/")) return true;
+    if (/\.(jpg|jpeg|png|gif|webp|svg|ico|pdf|woff2?)(\?|$)/i.test(u.pathname)) return true;
+  } catch (e) {
+  }
+  return false;
+}
+function resolveMarketingNavUrl(raw) {
+  if (raw == null || raw === "" || raw === "#") return raw || "#";
+  if (raw.startsWith("mailto:") || raw.startsWith("tel:") || raw.startsWith("javascript:")) return raw;
+  if (raw.startsWith("/") && !raw.startsWith("//")) {
+    if (raw.startsWith("/wp-content/") || raw.startsWith("/wp-includes/")) return raw;
+    return `${MARKETING_SITE_ORIGIN}${raw}`;
+  }
+  if (!raw.startsWith("http")) return raw;
+  if (isLikelyStaticAssetUrl(raw)) return raw;
+  try {
+    const u = new URL(raw);
+    if (u.hostname === "localhost" || u.hostname === "127.0.0.1" || u.hostname === "[::1]") {
+      return `${MARKETING_SITE_ORIGIN}${u.pathname}${u.search}${u.hash}`;
+    }
+    if (u.hostname.includes("cms.geniussports.com")) {
+      return `${MARKETING_SITE_ORIGIN}${u.pathname}${u.search}${u.hash}`;
+    }
+    return raw;
+  } catch (e) {
+    return raw;
+  }
+}
+function rewriteUrlsDeep(value) {
+  if (value === null || value === void 0) return value;
+  if (Array.isArray(value)) return value.map(rewriteUrlsDeep);
+  if (typeof value === "object") {
+    const o = value;
+    const out = {};
+    for (const [k, v] of Object.entries(o)) {
+      if ((k === "url" || k === "permalink") && typeof v === "string") {
+        out[k] = resolveMarketingNavUrl(v);
+      } else {
+        out[k] = rewriteUrlsDeep(v);
+      }
+    }
+    return out;
+  }
+  return value;
+}
+function rewriteHeaderNavToMarketingSite(options) {
+  if (!(options == null ? void 0 : options.header)) return options;
+  const clone = typeof structuredClone === "function" ? structuredClone(options) : JSON.parse(JSON.stringify(options));
+  clone.header = rewriteUrlsDeep(clone.header);
+  return clone;
+}
+
+// src/components/shell/SiteShell.tsx
+import { Fragment as Fragment36, jsx as jsx233, jsxs as jsxs195 } from "react/jsx-runtime";
+function SiteShell({
+  children,
+  homeHref = MARKETING_SITE_ORIGIN
+}) {
+  var _a, _b, _c;
+  const [context] = useContext9(GlobalContext);
+  const footer = (_a = context == null ? void 0 : context.options) == null ? void 0 : _a.footer;
+  return /* @__PURE__ */ jsxs195(Fragment36, { children: [
+    /* @__PURE__ */ jsx233(Header, { homeHref }),
+    /* @__PURE__ */ jsx233("main", { children }),
+    /* @__PURE__ */ jsx233(
+      Footer,
+      {
+        columns: footer == null ? void 0 : footer.columns,
+        social: footer == null ? void 0 : footer.social,
+        terms: footer == null ? void 0 : footer.terms,
+        CTA: (_b = footer == null ? void 0 : footer.global_cta) == null ? void 0 : _b.footer_cta,
+        featuredLinks: (_c = footer == null ? void 0 : footer.global_featured_links) == null ? void 0 : _c.footer_featured_links
+      }
+    )
+  ] });
+}
+
+// src/components/shell/Providers.tsx
+init_context();
+import { useState as useState54 } from "react";
+import { jsx as jsx234 } from "react/jsx-runtime";
+function Providers({
+  children,
+  options
+}) {
+  const [context, setContext] = useState54({ history: [], options });
+  return /* @__PURE__ */ jsx234(GlobalContext.Provider, { value: [context, setContext], children });
+}
+
 // src/tokens/tokens.ts
 var colors = {
   navy: "#0D1226",
@@ -13632,14 +13730,17 @@ export {
   Link,
   LinkTypeRenderer,
   LinkedinLogo,
+  MARKETING_SITE_ORIGIN,
   MinusCircle,
   MobileChevron,
   NavLeftIcon,
   PlayArrow,
   PlusCircle,
+  Providers,
   RightArrow,
   RightArrowCircle,
   SearchIcon,
+  SiteShell,
   SliderCircleArrow,
   StockArrow,
   TestimonialSliderArrow,
@@ -13649,6 +13750,8 @@ export {
   YoutubeLogo,
   colors,
   fontFamily,
+  resolveMarketingNavUrl,
+  rewriteHeaderNavToMarketingSite,
   screens,
   spacing
 };

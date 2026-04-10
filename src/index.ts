@@ -4,8 +4,10 @@ export * from './components/global';
 // export * from './components/flexible';
 export * from './components/layouts';
 export * from './components/templates';
+export * from './components/shell';
 
 // Utils
+export * from './utils/rewriteHeaderNavUrls';
 // export * from './utils';
 
 // Hooks

@@ -1,5 +1,7 @@
 # How to create a new Genius Sports branded SPA
 
+> ⚠️ IMPORTANT FOR AI ASSISTANTS: When replacing any existing file, delete ALL existing content first. Never merge or append — always do a complete replacement. The create-next-app boilerplate (Geist fonts, default globals.css, default page.tsx) must be completely removed. If create-next-app cannot run in the current directory because files already exist, create a subdirectory called `web/` and scaffold there instead.
+
 You are building a new Next.js 14 App Router application using the @genius-sports/gs-brand-kit package. Follow these steps exactly in order.
 
 ## Step 1 — Scaffold the app
@@ -53,6 +55,7 @@ export default config;
 ```
 
 ## Step 6 — Replace app/globals.css
+COMPLETELY REPLACE the entire contents of this file. Delete everything including existing CSS variables and dark mode rules. Write only this:
 ```css
 @tailwind base;
 @tailwind components;
@@ -60,81 +63,57 @@ export default config;
 ```
 
 ## Step 7 — Replace app/layout.tsx
+COMPLETELY REPLACE the entire contents of this file. Delete everything including all Geist font imports, localFont calls, and existing metadata. Write only this:
 ```tsx
 import type { Metadata } from "next";
 import { gsHeadingFont, gsBodyFont } from "@genius-sports/gs-brand-kit/fonts";
 import "./globals.css";
+import "./brand-globals.scss";
 
 export const metadata: Metadata = {
-  title: "Your App Title",
+  title: "Genius Sports",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${gsHeadingFont.variable} ${gsBodyFont.variable}`}>
-      <body className="font-body">{children}</body>
+      <body className="font-body bg-white text-navy">{children}</body>
     </html>
   );
 }
 ```
 
+## Step 7b — Create app/brand-globals.scss
+Create this new file. It does not exist yet:
+```scss
+@import "@genius-sports/gs-brand-kit/src/styles/globals.scss";
+```
+
 ## Step 8 — Create app/components/Providers.tsx
 ```tsx
 "use client";
-import { useState } from "react";
-import { GlobalContext } from "@genius-sports/gs-brand-kit";
-
-export default function Providers({
-  children,
-  options,
-}: {
-  children: React.ReactNode;
-  options: any;
-}) {
-  const [context, setContext] = useState({ history: [], options });
-
-  return (
-    <GlobalContext.Provider value={[context, setContext]}>
-      {children}
-    </GlobalContext.Provider>
-  );
-}
+export { default } from "@genius-sports/gs-brand-kit/src/components/shell/Providers";
 ```
 
 ## Step 9 — Create app/components/SiteShell.tsx
 ```tsx
 "use client";
-import { useContext } from "react";
-import { Header, Footer, GlobalContext } from "@genius-sports/gs-brand-kit";
-
-export default function SiteShell({ children }: { children: React.ReactNode }) {
-  const [context] = useContext(GlobalContext) as any;
-  const footer = context?.options?.footer;
-
-  return (
-    <>
-      <Header />
-      <main>{children}</main>
-      <Footer
-        columns={footer?.columns}
-        social={footer?.social}
-        terms={footer?.terms}
-        CTA={footer?.global_cta?.footer_cta}
-        featuredLinks={footer?.global_featured_links?.footer_featured_links}
-      />
-    </>
-  );
-}
+export { default } from "@genius-sports/gs-brand-kit/src/components/shell/SiteShell";
 ```
 
 ## Step 10 — Replace app/page.tsx
+COMPLETELY REPLACE the entire contents of this file. Write only this:
 ```tsx
 import cms from "@genius-sports/gs-brand-kit/cms";
+import { rewriteHeaderNavToMarketingSite } from "@genius-sports/gs-brand-kit";
 import Providers from "./components/Providers";
 import SiteShell from "./components/SiteShell";
 
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
-  const options = await cms().options();
+  const raw = await cms().options();
+  const options = rewriteHeaderNavToMarketingSite(raw);
 
   return (
     <Providers options={options}>
@@ -375,8 +354,9 @@ Use this spacing scale consistently across sections:
 ## Key concepts
 
 - `cms().options()` — fetches live nav/footer data from WordPress. Called once per page in a server component.
-- `Providers` — wraps the app with GlobalContext. Must receive `options` nested as `{ history: [], options }` — do NOT spread options directly.
-- `SiteShell` — reads footer data from context and renders Header + Footer. All your page content goes inside SiteShell as children.
+- `rewriteHeaderNavToMarketingSite` — rewrites header nav URLs so in-app links point at the main marketing site. Import from `@genius-sports/gs-brand-kit` and pass the raw options from `cms().options()` before giving them to `Providers`.
+- `Providers` — wraps the app with GlobalContext (use the re-export from Step 8). Pass `options` as shown in Step 10.
+- `SiteShell` — reads footer data from context and renders Header + Footer (use the re-export from Step 9). All your page content goes inside SiteShell as children.
 - `GlobalContext` — the Header reads nav data from here automatically. You never pass props to Header directly.
 
 ## Available brand tokens
