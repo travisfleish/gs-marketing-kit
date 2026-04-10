@@ -1,6 +1,10 @@
 # Dependencies
 node_modules/
 
+# Next.js / nested example apps (matches any depth; do not ignore ./dist/ — package build output)
+**/.next/
+**/out/
+
 # Logs
 *.log
 npm-debug.log*

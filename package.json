@@ -30,7 +30,8 @@
       "require": "./dist/cms.mjs",
       "default": "./dist/cms.mjs"
     },
-    "./src/styles/globals.scss": "./src/styles/globals.scss"
+    "./src/styles/globals.scss": "./src/styles/globals.scss",
+    "./src/*": "./src/*"
   },
   "files": [
     "dist",
