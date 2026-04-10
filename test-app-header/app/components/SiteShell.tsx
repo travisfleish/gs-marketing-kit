@@ -3,6 +3,8 @@ import { useContext } from "react";
 import type { ComponentProps } from "react";
 import { Header, Footer, GlobalContext } from "@genius-sports/gs-brand-kit";
 
+import { MARKETING_SITE_ORIGIN } from "../lib/rewriteHeaderNavUrls";
+
 type FooterFields = Pick<
   ComponentProps<typeof Footer>,
   "columns" | "social" | "terms" | "CTA" | "featuredLinks"
@@ -21,8 +23,11 @@ type GlobalShellState = {
 
 export default function SiteShell({
   children,
+  homeHref = MARKETING_SITE_ORIGIN,
 }: {
   children: React.ReactNode;
+  /** Where the logo and nav resolve; defaults to the public marketing site. */
+  homeHref?: string;
 }) {
   const [context] = useContext(GlobalContext) as unknown as [
     GlobalShellState | undefined,
@@ -32,7 +37,7 @@ export default function SiteShell({
 
   return (
     <>
-      <Header />
+      <Header homeHref={homeHref} />
       <main>{children}</main>
       <Footer
         bgColor="white"

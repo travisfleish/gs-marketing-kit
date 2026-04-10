@@ -10814,13 +10814,13 @@ function HeaderLogoBottom() {
 
 // src/components/global/header/HeaderElements/HeaderLogo.tsx
 import { jsx as jsx20, jsxs as jsxs12 } from "react/jsx-runtime";
-function HeaderLogo({ bgColor, isScrolled }) {
+function HeaderLogo({ bgColor, isScrolled, homeHref = "/" }) {
   const logoColor = [""];
   if (bgColor === "white" || bgColor === "brightGreen" || bgColor === "lightOrange" || bgColor === "lightBlue") {
     logoColor.push("text-blue");
   }
   const ease = [0.68, -0.2, 0.15, 0.98];
-  return /* @__PURE__ */ jsx20(LazyMotion4, { features: domAnimation4, children: /* @__PURE__ */ jsx20("div", { className: `w-10 cursor-pointer lg:w-16 ${logoColor.join(" ")}`, children: /* @__PURE__ */ jsxs12(Link2, { href: "/", "aria-label": "Back to Home", children: [
+  return /* @__PURE__ */ jsx20(LazyMotion4, { features: domAnimation4, children: /* @__PURE__ */ jsx20("div", { className: `w-10 cursor-pointer lg:w-16 ${logoColor.join(" ")}`, children: /* @__PURE__ */ jsxs12(Link2, { href: homeHref, "aria-label": "Back to Home", children: [
     /* @__PURE__ */ jsx20(HeaderLogoTop, {}),
     /* @__PURE__ */ jsx20(AnimatePresence, { initial: false, children: !isScrolled && /* @__PURE__ */ jsx20(
       m4.div,
@@ -11082,7 +11082,8 @@ function Header({
   bgColor = "white",
   blockScroll,
   addScrollProgress,
-  showPageToast
+  showPageToast,
+  homeHref
 }) {
   var _a, _b, _c, _d;
   const [context] = useContext2(GlobalContext);
@@ -11137,7 +11138,7 @@ function Header({
         children: [
           hasBanner && /* @__PURE__ */ jsx43(Banner, __spreadValues({}, (_d = (_c = context == null ? void 0 : context.options) == null ? void 0 : _c.header) == null ? void 0 : _d.toast_bar)),
           /* @__PURE__ */ jsx43("div", { className: "container h-full", onMouseLeave: () => closeDesktopMenu(), children: /* @__PURE__ */ jsxs30("div", { className: "flex h-full items-center justify-between space-x-4 lg:space-x-12 xl:space-x-16", children: [
-            /* @__PURE__ */ jsx43(HeaderLogo_default, { bgColor: selectedColor, isScrolled }),
+            /* @__PURE__ */ jsx43(HeaderLogo_default, { bgColor: selectedColor, isScrolled, homeHref }),
             /* @__PURE__ */ jsx43(
               HeaderMenu_default,
               {

@@ -175,8 +175,10 @@ type HeaderProps = {
     blockScroll?: boolean;
     addScrollProgress?: boolean;
     showPageToast?: boolean;
+    /** Logo home link; use the public marketing origin when this app is not geniussports.com. */
+    homeHref?: string;
 };
-declare function Header({ bgColor, blockScroll, addScrollProgress, showPageToast, }: HeaderProps): react_jsx_runtime.JSX.Element;
+declare function Header({ bgColor, blockScroll, addScrollProgress, showPageToast, homeHref, }: HeaderProps): react_jsx_runtime.JSX.Element;
 
 interface FooterProps extends Partial<WpOptionsFooter> {
     hideCTA?: boolean;

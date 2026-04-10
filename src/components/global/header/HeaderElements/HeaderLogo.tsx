@@ -7,9 +7,11 @@ import { HeaderLogoTop, HeaderLogoBottom } from "../../Logo";
 interface HeaderLogoProps {
 	bgColor?: string;
 	isScrolled?: boolean;
+	/** Defaults to `/`. Use an absolute URL when the shell is not the marketing site (e.g. local header tests). */
+	homeHref?: string;
 }
 
-function HeaderLogo({ bgColor, isScrolled }: HeaderLogoProps) {
+function HeaderLogo({ bgColor, isScrolled, homeHref = "/" }: HeaderLogoProps) {
 	const logoColor = [""];
 	if (bgColor === "white" || bgColor === "brightGreen" || bgColor === "lightOrange" || bgColor === "lightBlue") {
 		logoColor.push("text-blue");
@@ -19,7 +21,7 @@ function HeaderLogo({ bgColor, isScrolled }: HeaderLogoProps) {
 	return (
 		<LazyMotion features={domAnimation}>
 			<div className={`w-10 cursor-pointer lg:w-16 ${logoColor.join(" ")}`}>
-				<Link href="/" aria-label="Back to Home">
+				<Link href={homeHref} aria-label="Back to Home">
 					<HeaderLogoTop />
 					<AnimatePresence initial={false}>
 						{!isScrolled && (

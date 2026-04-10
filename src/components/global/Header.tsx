@@ -31,6 +31,8 @@ type HeaderProps = {
 	blockScroll?: boolean;
 	addScrollProgress?: boolean;
 	showPageToast?: boolean;
+	/** Logo home link; use the public marketing origin when this app is not geniussports.com. */
+	homeHref?: string;
 };
 
 export default function Header({
@@ -38,6 +40,7 @@ export default function Header({
 	blockScroll,
 	addScrollProgress,
 	showPageToast,
+	homeHref,
 }: HeaderProps) {
 	// header data
 	const [context] = useContext(GlobalContext);
@@ -123,7 +126,7 @@ export default function Header({
 				<div className="container h-full" onMouseLeave={() => closeDesktopMenu()}>
 					<div className="flex h-full items-center justify-between space-x-4 lg:space-x-12 xl:space-x-16">
 						{/* logo */}
-						<HeaderLogo bgColor={selectedColor} isScrolled={isScrolled} />
+						<HeaderLogo bgColor={selectedColor} isScrolled={isScrolled} homeHref={homeHref} />
 
 						{/* header nav */}
 						<HeaderMenu
