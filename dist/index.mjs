@@ -1290,7 +1290,7 @@ var init_Asset = __esm({
 // src/components/elements/media/Icon.tsx
 import { jsx as jsx10 } from "react/jsx-runtime";
 function Icon({ priority = false, icon }) {
-  return /* @__PURE__ */ jsx10("div", { className: "h-full w-full", children: (icon == null ? void 0 : icon.type) === "image" && /* @__PURE__ */ jsx10(WpImage, { image: icon == null ? void 0 : icon.image, fill: true, priority, className: "h-full w-full object-contain" }) });
+  return /* @__PURE__ */ jsx10("div", { className: "relative h-full w-full", children: (icon == null ? void 0 : icon.type) === "image" && /* @__PURE__ */ jsx10(WpImage, { image: icon == null ? void 0 : icon.image, fill: true, priority, className: "h-full w-full object-contain" }) });
 }
 var Icon_default;
 var init_Icon = __esm({
@@ -1530,7 +1530,7 @@ function PodcastSpring({ cardHovered, colour = "", heightFull = false }) {
       "div",
       {
         className: "flex h-full flex-col items-center transition-transform duration-300",
-        style: { transform: `translateY(${cardHovered ? translateY[0] : cardHovered[1]}%)` },
+        style: { transform: `translateY(${cardHovered ? translateY[0] : translateY[1]}%)` },
         children: [
           /* @__PURE__ */ jsx14("div", { className: `shrink-0 ${heightFull ? "h-1/4 w-[0.09375rem]" : "h-[.5rem] w-[0.0625rem]"} ${colourClass.join(" ")}` }),
           /* @__PURE__ */ jsx14("div", { className: `${heightFull ? "h-3/4 w-[.28rem] sm:w-[.3125rem]" : "h-full w-[0.2rem]"} ${colourClass.join(" ")}` })

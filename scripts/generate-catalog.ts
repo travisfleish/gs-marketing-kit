@@ -7,7 +7,7 @@
 import * as fs from "fs";
 import * as path from "path";
 import ts from "typescript";
-import { colors, screens } from "../src/tokens/tokens";
+import { colors, fontFamily, screens, spacing } from "../src/tokens/tokens";
 import { containerWidthsPx } from "../src/tokens/containers";
 
 const ROOT = process.cwd();
@@ -19,6 +19,21 @@ const TYPOGRAPHY_PATH = path.join(ROOT, "src/styles/_typography.scss");
 const CONTAINER_SCSS_PATH = path.join(ROOT, "src/styles/_container.scss");
 const DTS_PATH = path.join(ROOT, "dist/index.d.mts");
 const OUT_PATH = path.join(ROOT, "CATALOG.md");
+const FOUNDATIONS_DIR = path.join(ROOT, "foundations");
+const FOUNDATIONS_MD_PATH = path.join(FOUNDATIONS_DIR, "FOUNDATIONS.md");
+const FOUNDATIONS_FONTS_CSS_PATH = path.join(FOUNDATIONS_DIR, "fonts.css");
+const FOUNDATIONS_BRAND_TOKENS_CSS_PATH = path.join(FOUNDATIONS_DIR, "brand-tokens.css");
+const SOURCE_FONTS_DIR = path.join(ROOT, "src", "assets", "fonts");
+const FOUNDATIONS_FONTS_DIR = path.join(FOUNDATIONS_DIR, "fonts");
+
+/** Same filenames as [src/fonts.ts](../src/fonts.ts); copied into foundations/fonts/ for a self-contained folder. */
+const FOUNDATIONS_FONT_FILES = [
+  "ESKlarheitKurrent-Bk_TRIAL.woff2",
+  "ESKlarheitKurrent-Md_TRIAL.woff2",
+  "ESKlarheitKurrent-Smbd_TRIAL.woff2",
+  "RedHatText-Regular.woff2",
+  "RedHatText-Medium.woff2",
+] as const;
 
 const TYPOGRAPHY_CLASS_ORDER: string[] = [
   "text-h1",
@@ -206,7 +221,7 @@ function buildColorRows(): string {
 
 const SCREEN_ORDER = ["xxs", "xs", "sm", "md", "960", "lg", "xl", "2xl", "3xl"];
 
-function buildBreakpointRows(): string {
+function getSortedScreenEntries(): [string, string][] {
   const entries = Object.entries(screens) as [string, string][];
   entries.sort((a, b) => {
     const ia = SCREEN_ORDER.indexOf(a[0]);
@@ -216,7 +231,11 @@ function buildBreakpointRows(): string {
     if (ib === -1) return -1;
     return ia - ib;
   });
-  return entries
+  return entries;
+}
+
+function buildBreakpointRows(): string {
+  return getSortedScreenEntries()
     .map(([token, width]) => `| ${token} | ${width} | ${token}: |`)
     .join("\n");
 }
@@ -273,6 +292,53 @@ Standard spacing patterns to use consistently across all pages.
 | Heading to body | mb-4 md:mb-6 | Between a heading and paragraph |
 | Body to CTA | mt-6 md:mt-8 lg:mt-10 | Between body text and a button |
 `;
+
+/** Extra spacing keys from [src/tokens/tokens.ts](src/tokens/tokens.ts) (Tailwind extension). */
+function buildSpacingScaleRows(): string {
+  return Object.entries(spacing)
+    .map(([k, v]) => `| \`${k}\` | ${v} | Extended scale; use via Tailwind config or match in CSS |`)
+    .join("\n");
+}
+
+/** Shared “foundations” body: typography → colors → breakpoints → container → spacing patterns + scale. */
+function buildCoreReferenceMarkdown(typographyScss: string): string {
+  return `## Typography
+
+Use these classes for all text. Never use raw Tailwind font-size classes like text-xl or text-5xl.
+
+| Class | Size | Use for |
+|---|---|---|
+${buildTypographyRows(typographyScss)}
+
+## Colors
+
+Never hardcode hex values. Always use the Tailwind token class.
+
+| Token | Hex | Tailwind class | Use for |
+|---|---|---|---|
+${buildColorRows()}
+
+## Breakpoints
+
+Always design mobile-first. Add responsive prefixes to scale up.
+
+| Token | Width | Tailwind prefix |
+|---|---|---|
+${buildBreakpointRows()}
+
+${buildContainerSection()}
+
+${SPACING_SECTION}
+
+## Spacing scale (extended tokens)
+
+These values extend the default Tailwind spacing map in the brand preset. Prefer them when the preset is available.
+
+| Key | Rem | Notes |
+|---|---|---|
+${buildSpacingScaleRows()}
+`;
+}
 
 /** Mirrors [src/styles/_container.scss](src/styles/_container.scss) */
 const CONTAINER_ROWS: { modifier: string; maxPx: string; note: string }[] = [
@@ -583,19 +649,187 @@ For each component, use the exact import path shown. Never build these from scra
 ${chunks.join("\n")}`;
 }
 
-function main() {
-  if (!fs.existsSync(DTS_PATH)) {
-    console.error(
-      `Missing ${DTS_PATH}. Run npm run build first so declaration files are emitted.`,
-    );
+function buildFoundationsMarkdown(typographyScss: string): string {
+  return `---
+
+# Genius Sports Brand Kit — Foundations (no React components)
+
+This file is auto-generated. Do not edit manually. Run \`npm run catalog\` to regenerate.
+
+## How to use this file
+
+Use this bundle for **Vite SPAs**, **Lovable**, **Bolt**, **Cursor**, or any stack that should **look on-brand** without installing the full React kit.
+
+1. **Paste** this file (or the relevant sections) into your AI’s project instructions / knowledge base.
+2. **Import** CSS from the published package:
+   - \`@import "${PKG_NAME}/foundations/fonts.css";\`
+   - \`@import "${PKG_NAME}/foundations/brand-tokens.css";\`
+3. **Fonts** — Binary files live in \`foundations/fonts/*.woff2\` next to \`fonts.css\` (copied from \`src/assets/fonts\` when the catalog runs). **Copy the entire \`foundations/\` folder** into another repo to get \`FOUNDATIONS.md\`, \`brand-tokens.css\`, \`fonts.css\`, and webfonts in one place. When using the npm package, \`@import\` paths still work as below.
+
+For **full marketing pages** with header, footer, and CMS data, use the main package entry and [\`CATALOG.md\`](../CATALOG.md) (components section).
+
+${buildCoreReferenceMarkdown(typographyScss)}
+
+## CSS companion files
+
+| File | Role |
+|---|---|
+| \`foundations/brand-tokens.css\` | \`:root\` CSS variables for colors, breakpoints, spacing keys, container widths, font family names |
+| \`foundations/fonts.css\` | \`@font-face\` for heading and body fonts (loads \`./fonts/*.woff2\`) |
+| \`foundations/fonts/*.woff2\` | Webfont binaries (mirrors \`src/assets/fonts\`) |
+`;
+}
+
+function cssEscapeSpacingKey(key: string): string {
+  return key.replace(/\./g, "-");
+}
+
+function writeBrandTokensCss(outPath: string) {
+  const colorLines = Object.entries(colors).map(
+    ([name, hex]) => `  --color-${name}: ${hex};`,
+  );
+  const screenLines = getSortedScreenEntries().map(([name, w]) => {
+    const safe = String(name).replace(/[^a-zA-Z0-9]/g, "");
+    return `  --screen-${safe}: ${w};`;
+  });
+  const spacingLines = Object.entries(spacing).map(([k, v]) => {
+    const id = cssEscapeSpacingKey(k);
+    return `  --spacing-${id}: ${v};`;
+  });
+  const containerLines = Object.entries(containerWidthsPx).map(
+    ([k, v]) => `  --container-${k}: ${v}px;`,
+  );
+
+  const css = `/**
+ * Genius Sports brand tokens as CSS custom properties.
+ * Auto-generated — run \`npm run catalog\` to regenerate.
+ * Source: src/tokens/tokens.ts, src/tokens/containers.ts
+ */
+:root {
+  /* Font family names (load faces via foundations/fonts.css or next/font) */
+  --font-heading: "${fontFamily.heading}", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "${fontFamily.body}", ui-sans-serif, system-ui, sans-serif;
+
+  /* Colors (${PKG_NAME} / Tailwind theme) */
+${colorLines.join("\n")}
+
+  /* Breakpoints (reference; use in @media or match Tailwind screens) */
+${screenLines.join("\n")}
+
+  /* Extended spacing scale (rem) */
+${spacingLines.join("\n")}
+
+  /* Semantic container widths (px) */
+${containerLines.join("\n")}
+}
+`;
+
+  fs.writeFileSync(outPath, css, "utf8");
+  console.log(`Wrote ${outPath}`);
+}
+
+function copyFontAssetsToFoundations(): void {
+  if (!fs.existsSync(SOURCE_FONTS_DIR)) {
+    console.error(`Missing font source directory: ${SOURCE_FONTS_DIR}`);
     process.exit(1);
   }
+  fs.mkdirSync(FOUNDATIONS_FONTS_DIR, { recursive: true });
+  for (const file of FOUNDATIONS_FONT_FILES) {
+    const from = path.join(SOURCE_FONTS_DIR, file);
+    const to = path.join(FOUNDATIONS_FONTS_DIR, file);
+    if (!fs.existsSync(from)) {
+      console.error(`Missing font file: ${from}`);
+      process.exit(1);
+    }
+    fs.copyFileSync(from, to);
+  }
+  console.log(
+    `Copied ${FOUNDATIONS_FONT_FILES.length} font files to ${FOUNDATIONS_FONTS_DIR}`,
+  );
+}
+
+function writeFontsCss(outPath: string) {
+  /**
+   * Paths are relative to foundations/fonts.css → ./fonts/*.woff2 (self-contained foundations/).
+   * Matches src/fonts.ts (next/font/local); binaries are copied by copyFontAssetsToFoundations().
+   */
+  const css = `/**
+ * Brand webfonts (@font-face). Font files live in ./fonts/ next to this file.
+ * Auto-generated — run \`npm run catalog\` to regenerate (copies from src/assets/fonts).
+ */
+@font-face {
+  font-family: "${fontFamily.heading}";
+  src: url("./fonts/ESKlarheitKurrent-Bk_TRIAL.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "${fontFamily.heading}";
+  src: url("./fonts/ESKlarheitKurrent-Md_TRIAL.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "${fontFamily.heading}";
+  src: url("./fonts/ESKlarheitKurrent-Smbd_TRIAL.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "${fontFamily.body}";
+  src: url("./fonts/RedHatText-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "${fontFamily.body}";
+  src: url("./fonts/RedHatText-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+`;
+
+  fs.writeFileSync(outPath, css, "utf8");
+  console.log(`Wrote ${outPath}`);
+}
+
+function main() {
   if (!fs.existsSync(TYPOGRAPHY_PATH) || !fs.existsSync(CONTAINER_SCSS_PATH)) {
     console.error("Missing typography or container SCSS source files.");
     process.exit(1);
   }
 
   const typographyScss = fs.readFileSync(TYPOGRAPHY_PATH, "utf8");
+
+  if (!fs.existsSync(FOUNDATIONS_DIR)) {
+    fs.mkdirSync(FOUNDATIONS_DIR, { recursive: true });
+  }
+
+  copyFontAssetsToFoundations();
+
+  const foundationsMd = buildFoundationsMarkdown(typographyScss);
+  fs.writeFileSync(FOUNDATIONS_MD_PATH, foundationsMd, "utf8");
+  console.log(`Wrote ${FOUNDATIONS_MD_PATH}`);
+
+  writeBrandTokensCss(FOUNDATIONS_BRAND_TOKENS_CSS_PATH);
+  writeFontsCss(FOUNDATIONS_FONTS_CSS_PATH);
+
+  if (!fs.existsSync(DTS_PATH)) {
+    console.error(
+      `Missing ${DTS_PATH}. Run npm run build first so declaration files are emitted.`,
+    );
+    process.exit(1);
+  }
+
   const dts = fs.readFileSync(DTS_PATH, "utf8");
   const componentNames = getComponentExports(dts);
 
@@ -608,33 +842,7 @@ This file is auto-generated. Do not edit manually. Run \`npm run catalog\` to re
 ## How to use this file
 When building any UI, read this file first. Use only the classes, tokens, and components listed here. Never invent custom values for typography, color, spacing, or buttons.
 
-## Typography
-
-Use these classes for all text. Never use raw Tailwind font-size classes like text-xl or text-5xl.
-
-| Class | Size | Use for |
-|---|---|---|
-${buildTypographyRows(typographyScss)}
-
-## Colors
-
-Never hardcode hex values. Always use the Tailwind token class.
-
-| Token | Hex | Tailwind class | Use for |
-|---|---|---|---|
-${buildColorRows()}
-
-## Breakpoints
-
-Always design mobile-first. Add responsive prefixes to scale up.
-
-| Token | Width | Tailwind prefix |
-|---|---|---|
-${buildBreakpointRows()}
-
-${buildContainerSection()}
-
-${SPACING_SECTION}
+${buildCoreReferenceMarkdown(typographyScss)}
 
 ${buildComponentsSection(DTS_PATH, dts, componentNames)}
 `;

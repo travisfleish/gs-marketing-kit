@@ -128,6 +128,22 @@ Standard spacing patterns to use consistently across all pages.
 | Body to CTA | mt-6 md:mt-8 lg:mt-10 | Between body text and a button |
 
 
+## Spacing scale (extended tokens)
+
+These values extend the default Tailwind spacing map in the brand preset. Prefer them when the preset is available.
+
+| Key | Rem | Notes |
+|---|---|---|
+| `13` | 3.25rem | Extended scale; use via Tailwind config or match in CSS |
+| `15` | 3.75rem | Extended scale; use via Tailwind config or match in CSS |
+| `18` | 4.5rem | Extended scale; use via Tailwind config or match in CSS |
+| `51` | 12.75rem | Extended scale; use via Tailwind config or match in CSS |
+| `272` | 68rem | Extended scale; use via Tailwind config or match in CSS |
+| `4.25` | 1.063rem | Extended scale; use via Tailwind config or match in CSS |
+| `7.5` | 1.875rem | Extended scale; use via Tailwind config or match in CSS |
+| `18.875` | 4.719rem | Extended scale; use via Tailwind config or match in CSS |
+
+
 ## Components
 
 For each component, use the exact import path shown. Never build these from scratch.

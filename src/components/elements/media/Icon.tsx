@@ -13,7 +13,7 @@ export interface IconProps {
 
 function Icon({ priority = false, icon }: IconProps) {
 	return (
-		<div className="h-full w-full">
+		<div className="relative h-full w-full">
 			{icon?.type === "image" && <WpImage image={icon?.image} fill priority={priority} className="h-full w-full object-contain" />}
 		</div>
 	);

@@ -1,0 +1,55 @@
+/**
+ * Genius Sports brand tokens as CSS custom properties.
+ * Auto-generated — run `npm run catalog` to regenerate.
+ * Source: src/tokens/tokens.ts, src/tokens/containers.ts
+ */
+:root {
+  /* Font family names (load faces via foundations/fonts.css or next/font) */
+  --font-heading: "ESKlarheitKurrentTRIAL", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "RedHatText", ui-sans-serif, system-ui, sans-serif;
+
+  /* Colors (@genius-sports/gs-brand-kit / Tailwind theme) */
+  --color-navy: #0D1226;
+  --color-blue: #0000DC;
+  --color-lightBlue: #95ECFD;
+  --color-brightGreen: #E1FF67;
+  --color-lightGreen: #18C971;
+  --color-green: #047C40;
+  --color-lightPurple: #C2D1FF;
+  --color-purple: #4337A8;
+  --color-lightOrange: #FFEBAF;
+  --color-orange: #FA5D00;
+  --color-lightRed: #F76B6A;
+  --color-red: #C20000;
+  --color-black: #000000;
+  --color-lightGrey: #F6F7F9;
+  --color-lavenderGrey: #E7E7E9;
+  --color-white: #ffffff;
+  --color-snow: #FAFAFA;
+
+  /* Breakpoints (reference; use in @media or match Tailwind screens) */
+  --screen-xxs: 400px;
+  --screen-xs: 480px;
+  --screen-sm: 640px;
+  --screen-md: 768px;
+  --screen-960: 960px;
+  --screen-lg: 1024px;
+  --screen-xl: 1280px;
+  --screen-2xl: 1420px;
+  --screen-3xl: 1536px;
+
+  /* Extended spacing scale (rem) */
+  --spacing-13: 3.25rem;
+  --spacing-15: 3.75rem;
+  --spacing-18: 4.5rem;
+  --spacing-51: 12.75rem;
+  --spacing-272: 68rem;
+  --spacing-4-25: 1.063rem;
+  --spacing-7-5: 1.875rem;
+  --spacing-18-875: 4.719rem;
+
+  /* Semantic container widths (px) */
+  --container-narrow: 1110px;
+  --container-default: 1280px;
+  --container-wide: 1376px;
+}

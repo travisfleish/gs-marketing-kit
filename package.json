@@ -31,12 +31,18 @@
       "default": "./dist/cms.mjs"
     },
     "./src/styles/globals.scss": "./src/styles/globals.scss",
+    "./foundations/FOUNDATIONS.md": "./foundations/FOUNDATIONS.md",
+    "./foundations/fonts.css": "./foundations/fonts.css",
+    "./foundations/brand-tokens.css": "./foundations/brand-tokens.css",
+    "./foundations/README.md": "./foundations/README.md",
+    "./foundations/fonts/*": "./foundations/fonts/*",
     "./src/*": "./src/*"
   },
   "files": [
     "dist",
     "src",
-    "CATALOG.md"
+    "CATALOG.md",
+    "foundations"
   ],
   "scripts": {
     "build": "tsup && node scripts/fix-fonts-const.mjs && node scripts/fix-tailwind-preset-dts.mjs && npm run catalog",

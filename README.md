@@ -42,6 +42,7 @@ Deliverables include:
 - **React components** — Global shell (header, footer, etc.), elements, layouts, and page templates aligned with the WP front end.
 - **WordPress JSON client** — Fetches options, pages, redirects, and other data exposed by the site’s custom REST routes (`together/*`).
 - **Fonts** — `next/font/local` wrappers for heading (ES Klarheit Kurrent) and body (Red Hat Text).
+- **Foundations bundle** — For Vite SPAs and vibe-coding tools: copy the whole [`foundations/`](./foundations/README.md) folder (generated [`FOUNDATIONS.md`](./foundations/FOUNDATIONS.md), [`brand-tokens.css`](./foundations/brand-tokens.css), [`fonts.css`](./foundations/fonts.css), and [`fonts/*.woff2`](./foundations/fonts)). See [`foundations/README.md`](./foundations/README.md).
 
 Published build output lives in **`dist/`**. **`src/`** is published alongside it so consumers can import SCSS and so Tailwind `content` globs can scan component files (see below).
 
@@ -59,6 +60,7 @@ Published build output lives in **`dist/`**. **`src/`** is published alongside i
 | `src/fonts.ts` | Built as the **`fonts`** entry point. |
 | `src/tailwind-preset.ts` | Brand Tailwind preset. |
 | `dist/` | Generated ESM + `.d.mts` (do not edit by hand). |
+| `foundations/` | Lightweight brand bundle: `FOUNDATIONS.md`, `brand-tokens.css`, `fonts.css`, `fonts/*.woff2` (generated + copied by `npm run catalog`; see `foundations/README.md`). |
 | `test-app-header/` | Minimal Next.js app using `file:..` to test header/footer against live CMS. |
 | [`CURSOR_INSTRUCTIONS.md`](./CURSOR_INSTRUCTIONS.md) | Step-by-step scaffold for a new branded Next.js 14 app. |
 
@@ -77,6 +79,9 @@ Published build output lives in **`dist/`**. **`src/`** is published alongside i
 | `@genius-sports/gs-brand-kit/fonts` | `gsHeadingFont`, `gsBodyFont` (`next/font/local`). |
 | `@genius-sports/gs-brand-kit/tailwind-preset` | Default Tailwind preset (brand colors, fonts, breakpoints, container). |
 | `@genius-sports/gs-brand-kit/cms` | Default export: `cms()` factory with WordPress helpers. |
+| `@genius-sports/gs-brand-kit/foundations/FOUNDATIONS.md` | Markdown-only brand foundations (typography, colors, spacing); paste into AI tools. |
+| `@genius-sports/gs-brand-kit/foundations/brand-tokens.css` | `:root` CSS variables aligned with `src/tokens`. |
+| `@genius-sports/gs-brand-kit/foundations/fonts.css` | `@font-face` for brand webfonts (loads `foundations/fonts/*.woff2`). |
 | `@genius-sports/gs-brand-kit/src/styles/globals.scss` | SCSS entry (raw file in `src/`). |
 
 ---

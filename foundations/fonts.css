@@ -1,0 +1,43 @@
+/**
+ * Brand webfonts (@font-face). Font files live in ./fonts/ next to this file.
+ * Auto-generated — run `npm run catalog` to regenerate (copies from src/assets/fonts).
+ */
+@font-face {
+  font-family: "ESKlarheitKurrentTRIAL";
+  src: url("./fonts/ESKlarheitKurrent-Bk_TRIAL.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "ESKlarheitKurrentTRIAL";
+  src: url("./fonts/ESKlarheitKurrent-Md_TRIAL.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "ESKlarheitKurrentTRIAL";
+  src: url("./fonts/ESKlarheitKurrent-Smbd_TRIAL.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "RedHatText";
+  src: url("./fonts/RedHatText-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "RedHatText";
+  src: url("./fonts/RedHatText-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
